@@ -1,0 +1,3 @@
+org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
+com.rbkmoney.hellgate.client.eventsink.configuration.HellgateClientEventSinkConfiguration,\
+com.rbkmoney.hellgate.client.eventsink.HellgateClientEventSink

@@ -1,0 +1,29 @@
+package com.rbkmoney.hellgate.client.party.management.condition;
+
+import org.springframework.boot.autoconfigure.condition.ConditionOutcome;
+import org.springframework.boot.autoconfigure.condition.SpringBootCondition;
+import org.springframework.boot.bind.RelaxedPropertyResolver;
+import org.springframework.context.annotation.ConditionContext;
+import org.springframework.core.env.Environment;
+import org.springframework.core.type.AnnotatedTypeMetadata;
+import org.springframework.util.StringUtils;
+
+public class HellgateClientPartyManagementCondition extends SpringBootCondition {
+
+    @Override
+    public ConditionOutcome getMatchOutcome(ConditionContext context,
+                                            AnnotatedTypeMetadata annotatedTypeMetadata) {
+
+        if (isUrlPartyManagementEmpty(context.getEnvironment())) {
+            return ConditionOutcome.noMatch(
+                    "Hellgate Client PartyManagement is disabled, because 'rbkmoney.hellgate.client.url.party_management' is empty.");
+        }
+
+        return ConditionOutcome.match();
+    }
+
+    private boolean isUrlPartyManagementEmpty(Environment env) {
+        RelaxedPropertyResolver resolver = new RelaxedPropertyResolver(env, "rbkmoney.hellgate.client.url.");
+        return StringUtils.isEmpty(resolver.getProperty("party_management", ""));
+    }
+}

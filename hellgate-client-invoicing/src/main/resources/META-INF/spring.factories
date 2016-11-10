@@ -1,0 +1,3 @@
+org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
+com.rbkmoney.hellgate.client.invoicing.configuration.HellgateClientInvoicingConfiguration,\
+com.rbkmoney.hellgate.client.invoicing.HellgateClientInvoicing

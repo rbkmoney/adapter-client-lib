@@ -1,0 +1,3 @@
+org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
+com.rbkmoney.hellgate.client.proxy.host.provider.configuration.HellgateClientProxyHostProviderConfiguration,\
+com.rbkmoney.hellgate.client.proxy.host.provider.HellgateClientProxyHostProvider

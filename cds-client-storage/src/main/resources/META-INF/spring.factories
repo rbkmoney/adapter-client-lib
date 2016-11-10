@@ -1,0 +1,3 @@
+org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
+com.rbkmoney.cds.client.storage.configuration.CdsClientStorageConfiguration,\
+com.rbkmoney.cds.client.storage.CdsClientStorage

@@ -1,0 +1,36 @@
+Dominant
+
+Служба конфигурации домена
+
+### Настройки
+
+Добавить в `pom.xml` в зависимости
+
+```
+<dependency>
+    <groupId>com.rbkmoney</groupId>
+    <artifactId>dominant-client-repository</artifactId>
+    <version>1.99-557f549</version>
+</dependency>
+```
+
+и в `application.yml`
+
+```
+rbkmoney:
+  dominant:
+    client:
+      url:
+        repository: http://127.0.0.1:8022/v1/domain/repository 
+```
+
+При подключенной зависимости без указания настроек в `application.yml` и запуске приложения - оно выдаст ошибку, что не был указан URL и как это исправить
+
+### Использование
+
+Для того, чтобы начать пользоваться библиотекой после подключения, необходимо просто добавить `@Autowired`
+
+```
+@Autowired
+DominantClientRepository client;
+```

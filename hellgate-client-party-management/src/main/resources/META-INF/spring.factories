@@ -1,0 +1,3 @@
+org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
+com.rbkmoney.hellgate.client.party.management.configuration.HellgateClientPartyManagementConfiguration,\
+com.rbkmoney.hellgate.client.party.management.HellgateClientPartyManagement
