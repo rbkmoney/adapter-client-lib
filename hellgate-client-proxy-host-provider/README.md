@@ -8,7 +8,7 @@ Hellgate
 
 ```
 <dependency>
-    <groupId>com.rbkmoney</groupId>
+    <groupId>com.rbkmoney.proxy-libs</groupId>
     <artifactId>hellgate-client-proxy-host-provider</artifactId>
     <version>1.99-557f549</version>
 </dependency>
@@ -29,7 +29,7 @@ rbkmoney:
 
 ### Использование
 
-Для того, чтобы начать пользоваться библиотекой после подключения, необходимо просто добавить `@Autowired`
+Для того, чтобы начать пользоваться библиотекой после подключения, необходимо просто добавить
 
 ```
 @Autowired
