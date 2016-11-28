@@ -9,6 +9,7 @@ import com.rbkmoney.woody.thrift.impl.http.THSpawnClientBuilder;
 import com.rbkmoney.woody.thrift.impl.http.event.ClientEventLogListener;
 import com.rbkmoney.woody.thrift.impl.http.event.HttpClientEventLogListener;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Conditional;
@@ -25,21 +26,23 @@ public class HellgateClientProxyHostProviderConfiguration {
     private HellgateClientProxyHostProviderProperties properties;
 
     @Bean
-    public ProviderProxySrv.Iface providerProxySrv() throws IOException {
+    public ProviderProxySrv.Iface providerProxySrv(ClientEventListener listenerSrv) throws IOException {
         return clientBuilderHellgateProviderProxy()
-                .withEventListener(hellgateProviderProxyListener())
+                .withEventListener(listenerSrv)
                 .withAddress(properties.getProxyHostProvider().getURI())
                 .build(ProviderProxySrv.Iface.class);
     }
 
     @Bean
-    public ClientEventListener hellgateProviderProxyListener() {
+    @ConditionalOnMissingBean
+    public ClientEventListener listenerSrv() {
         return new CompositeClientEventListener(
                 new ClientEventLogListener(),
                 new HttpClientEventLogListener()
         );
     }
 
+    @Bean
     public ClientBuilder clientBuilderHellgateProviderProxy() {
         return new THSpawnClientBuilder();
     }

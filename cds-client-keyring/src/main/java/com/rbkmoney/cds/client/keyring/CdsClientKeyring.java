@@ -27,8 +27,10 @@ public class CdsClientKeyring {
      * @throws TException
      */
     public UnlockStatus unlock(ByteBuffer key_share) throws TException {
-        LOGGER.info("Keyring: unlock");
-        return keyringSrv.unlock(key_share);
+        LOGGER.info("Keyring: unlock start");
+        UnlockStatus unlockStatus = keyringSrv.unlock(key_share);
+        LOGGER.info("Keyring: unlock finish");
+        return unlockStatus;
     }
 
     /**
@@ -40,8 +42,32 @@ public class CdsClientKeyring {
      * @throws TException
      */
     public List<ByteBuffer> init(short threshold, short num_shares) throws TException {
-        LOGGER.info("Keyring: init");
-        return keyringSrv.init(threshold, num_shares);
+        LOGGER.info("Keyring: init start");
+        List<ByteBuffer> list = keyringSrv.init(threshold, num_shares);
+        LOGGER.info("Keyring: init finish");
+        return list;
+    }
+
+    /**
+     * Lock
+     *
+     * @throws TException
+     */
+    public void lock() throws TException {
+        LOGGER.info("Keyring: lock start");
+        keyringSrv.lock();
+        LOGGER.info("Keyring: lock finish");
+    }
+
+    /**
+     * Rotate
+     *
+     * @throws TException
+     */
+    public void rotate() throws TException {
+        LOGGER.info("Keyring: rotate start");
+        keyringSrv.rotate();
+        LOGGER.info("Keyring: rotate finish");
     }
 
 }

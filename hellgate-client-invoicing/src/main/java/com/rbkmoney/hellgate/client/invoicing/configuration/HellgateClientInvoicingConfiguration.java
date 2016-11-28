@@ -9,6 +9,7 @@ import com.rbkmoney.woody.thrift.impl.http.THSpawnClientBuilder;
 import com.rbkmoney.woody.thrift.impl.http.event.ClientEventLogListener;
 import com.rbkmoney.woody.thrift.impl.http.event.HttpClientEventLogListener;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Conditional;
@@ -25,15 +26,16 @@ public class HellgateClientInvoicingConfiguration {
     private HellgateClientInvoicingProperties properties;
 
     @Bean
-    public InvoicingSrv.Iface invoicingSrv() throws IOException {
+    public InvoicingSrv.Iface invoicingSrv(ClientEventListener listenerSrv) throws IOException {
         return clientBuilderHellgateInvoicing()
-                .withEventListener(hellgateInvoicingListener())
+                .withEventListener(listenerSrv)
                 .withAddress(properties.getInvoicing().getURI())
                 .build(InvoicingSrv.Iface.class);
     }
 
     @Bean
-    public ClientEventListener hellgateInvoicingListener() {
+    @ConditionalOnMissingBean
+    public ClientEventListener listenerSrv() {
         return new CompositeClientEventListener(
                 new ClientEventLogListener(),
                 new HttpClientEventLogListener()

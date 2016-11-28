@@ -9,6 +9,7 @@ import com.rbkmoney.woody.thrift.impl.http.THSpawnClientBuilder;
 import com.rbkmoney.woody.thrift.impl.http.event.ClientEventLogListener;
 import com.rbkmoney.woody.thrift.impl.http.event.HttpClientEventLogListener;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Conditional;
@@ -25,22 +26,25 @@ public class HellgateClientPartyManagementConfiguration {
     private HellgateClientPartyManagementProperties properties;
 
     @Bean
-    public PartyManagementSrv.Iface partyManagementSrv() throws IOException {
+    public PartyManagementSrv.Iface partyManagementSrv(ClientEventListener listenerSrv) throws IOException {
         return clientBuilderHellgatePartyManagement()
-                .withEventListener(hellgatePartyManagementListener())
+                .withEventListener(listenerSrv)
                 .withAddress(properties.getPartyManagement().getURI())
                 .build(PartyManagementSrv.Iface.class);
     }
 
     @Bean
-    public ClientEventListener hellgatePartyManagementListener() {
+    @ConditionalOnMissingBean
+    public ClientEventListener listenerSrv() {
         return new CompositeClientEventListener(
                 new ClientEventLogListener(),
                 new HttpClientEventLogListener()
         );
     }
 
+    @Bean
     public ClientBuilder clientBuilderHellgatePartyManagement() {
         return new THSpawnClientBuilder();
     }
+
 }

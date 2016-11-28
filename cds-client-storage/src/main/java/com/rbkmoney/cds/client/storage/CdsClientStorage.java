@@ -25,9 +25,9 @@ public class CdsClientStorage {
      * @throws TException
      */
     public CardData getCardData(String token) throws TException {
-        LOGGER.info("Storage getCardData: token {}", token);
+        LOGGER.info("Storage getCardData start with token {}", token);
         CardData cardData = storageSrv.getCardData(token);
-        LOGGER.info("Storage getCardData: response {}", cardData.toString());
+        LOGGER.info("Storage getCardData finish");
         return cardData;
     }
 
@@ -40,9 +40,9 @@ public class CdsClientStorage {
      * @throws TException
      */
     public CardData getSessionCardData(String token, String session) throws TException {
-        LOGGER.info("Storage getSessionCardData: token {}, session{} ", token, session);
+        LOGGER.info("Storage getSessionCardData start with token {}, session{} ", token, session);
         CardData cardData = storageSrv.getSessionCardData(token, session);
-        LOGGER.info("Storage getSessionCardData: response {}", cardData.toString());
+        LOGGER.info("Storage getSessionCardData finish");
         return cardData;
     }
 
@@ -54,9 +54,9 @@ public class CdsClientStorage {
      * @throws TException
      */
     public PutCardDataResult putCardData(CardData cardData) throws TException {
-        LOGGER.info("Storage putCardData: cardData {} ", cardData);
+        LOGGER.info("Storage putCardData start");
         PutCardDataResult result = storageSrv.putCardData(cardData);
-        LOGGER.info("Storage putCardData: response {}", result.toString());
+        LOGGER.info("Storage putCardData: finish");
         return result;
     }
 

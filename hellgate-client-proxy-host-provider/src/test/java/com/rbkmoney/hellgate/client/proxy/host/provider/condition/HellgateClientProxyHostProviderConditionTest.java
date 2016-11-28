@@ -35,7 +35,7 @@ public class HellgateClientProxyHostProviderConditionTest {
     @Test
     public void testNonEmptyUrl() {
         MockEnvironment environment = new MockEnvironment();
-        environment.setProperty("rbkmoney.hellgate.client.url.proxy_host_provider", "http://127.0.0.1:8022/v1/proxyhost/provider");
+        environment.setProperty("rbkmoney.hellgate.client.url.proxy-host-provider", "http://127.0.0.1:8022/v1/proxyhost/provider");
         BDDMockito.given(conditionContext.getEnvironment()).willReturn(environment);
         assertTrue(condition.getMatchOutcome(conditionContext, annotatedTypeMetadata).isMatch());
     }

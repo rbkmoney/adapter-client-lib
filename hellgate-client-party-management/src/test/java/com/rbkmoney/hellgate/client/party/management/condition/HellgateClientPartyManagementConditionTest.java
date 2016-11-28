@@ -34,7 +34,7 @@ public class HellgateClientPartyManagementConditionTest {
     @Test
     public void testNonEmptyUrl() {
         MockEnvironment environment = new MockEnvironment();
-        environment.setProperty("rbkmoney.hellgate.client.url.party_management", "http://127.0.0.1:8023/v1/processing/partymgmt");
+        environment.setProperty("rbkmoney.hellgate.client.url.party-management", "http://127.0.0.1:8023/v1/processing/partymgmt");
         BDDMockito.given(conditionContext.getEnvironment()).willReturn(environment);
         assertTrue(condition.getMatchOutcome(conditionContext, annotatedTypeMetadata).isMatch());
     }

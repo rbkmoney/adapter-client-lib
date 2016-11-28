@@ -19,9 +19,9 @@ public class DominantClientRepository implements RepositorySrv.Iface {
 
     @Override
     public long commit(long version, Commit commit) throws VersionNotFound, OperationConflict, TException {
-        LOGGER.info("Dominant: commit start");
+        LOGGER.info("Dominant: commit start with version {}" , version);
         long responseCommit = repositorySrv.commit(version, commit);
-        LOGGER.info("Dominant: commit finish");
+        LOGGER.info("Dominant: commit finish with response commit version {}", responseCommit);
         return responseCommit;
     }
 
@@ -35,7 +35,7 @@ public class DominantClientRepository implements RepositorySrv.Iface {
 
     @Override
     public Map<Long, Commit> pull(long version) throws VersionNotFound, TException {
-        LOGGER.info("Dominant: pull start");
+        LOGGER.info("Dominant: pull start with version {}", version);
         Map<Long, Commit> map = repositorySrv.pull(version);
         LOGGER.info("Dominant: pull finish");
         return map;

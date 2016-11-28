@@ -17,7 +17,7 @@ public class HellgateClientProxyHostProviderCondition extends SpringBootConditio
 
         if (isUrlProxyHostProviderEmpty(context.getEnvironment())) {
             return ConditionOutcome.noMatch(
-                    "Hellgate Client Proxy Host Provider is disabled, because 'rbkmoney.hellgate.client.url.proxy_host_provider' is empty.");
+                    "Hellgate Client Proxy Host Provider is disabled, because 'rbkmoney.hellgate.client.url.proxy-host-provider' is empty.");
         }
 
         return ConditionOutcome.match();
@@ -25,7 +25,7 @@ public class HellgateClientProxyHostProviderCondition extends SpringBootConditio
 
     private boolean isUrlProxyHostProviderEmpty(Environment env) {
         RelaxedPropertyResolver resolver = new RelaxedPropertyResolver(env, "rbkmoney.hellgate.client.url.");
-        return StringUtils.isEmpty(resolver.getProperty("proxy_host_provider", ""));
+        return StringUtils.isEmpty(resolver.getProperty("proxy-host-provider", ""));
     }
 
 }

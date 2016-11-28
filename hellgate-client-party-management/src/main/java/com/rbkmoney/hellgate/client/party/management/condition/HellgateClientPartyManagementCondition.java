@@ -16,7 +16,7 @@ public class HellgateClientPartyManagementCondition extends SpringBootCondition 
 
         if (isUrlPartyManagementEmpty(context.getEnvironment())) {
             return ConditionOutcome.noMatch(
-                    "Hellgate Client PartyManagement is disabled, because 'rbkmoney.hellgate.client.url.party_management' is empty.");
+                    "Hellgate Client PartyManagement is disabled, because 'rbkmoney.hellgate.client.url.party-management' is empty.");
         }
 
         return ConditionOutcome.match();
@@ -24,6 +24,6 @@ public class HellgateClientPartyManagementCondition extends SpringBootCondition 
 
     private boolean isUrlPartyManagementEmpty(Environment env) {
         RelaxedPropertyResolver resolver = new RelaxedPropertyResolver(env, "rbkmoney.hellgate.client.url.");
-        return StringUtils.isEmpty(resolver.getProperty("party_management", ""));
+        return StringUtils.isEmpty(resolver.getProperty("party-management", ""));
     }
 }

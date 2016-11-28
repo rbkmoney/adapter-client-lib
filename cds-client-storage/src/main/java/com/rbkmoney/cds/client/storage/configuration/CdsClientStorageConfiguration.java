@@ -9,6 +9,7 @@ import com.rbkmoney.woody.thrift.impl.http.THSpawnClientBuilder;
 import com.rbkmoney.woody.thrift.impl.http.event.ClientEventLogListener;
 import com.rbkmoney.woody.thrift.impl.http.event.HttpClientEventLogListener;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Conditional;
@@ -22,18 +23,19 @@ import java.io.IOException;
 public class CdsClientStorageConfiguration {
 
     @Autowired
-    private CdsClientStorageProperties cdsClientStorageProperties;
+    private CdsClientStorageProperties properties;
 
     @Bean
-    public StorageSrv.Iface storageSrv() throws IOException {
+    public StorageSrv.Iface storageSrv(ClientEventListener listenerSrv) throws IOException {
         return clientBuilderStorage()
-                .withEventListener(storageListener())
-                .withAddress(cdsClientStorageProperties.getStorage().getURI())
+                .withEventListener(listenerSrv)
+                .withAddress(properties.getStorage().getURI())
                 .build(StorageSrv.Iface.class);
     }
 
     @Bean
-    public ClientEventListener storageListener() {
+    @ConditionalOnMissingBean
+    public ClientEventListener listenerSrv() {
         return new CompositeClientEventListener(
                 new ClientEventLogListener(),
                 new HttpClientEventLogListener()

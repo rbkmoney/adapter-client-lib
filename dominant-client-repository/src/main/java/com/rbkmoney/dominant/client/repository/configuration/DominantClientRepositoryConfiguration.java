@@ -9,6 +9,7 @@ import com.rbkmoney.woody.thrift.impl.http.THSpawnClientBuilder;
 import com.rbkmoney.woody.thrift.impl.http.event.ClientEventLogListener;
 import com.rbkmoney.woody.thrift.impl.http.event.HttpClientEventLogListener;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Conditional;
@@ -25,15 +26,16 @@ public class DominantClientRepositoryConfiguration {
     private DominantClientRepositoryProperties properties;
 
     @Bean
-    public RepositorySrv.Iface repositorySrv() throws IOException {
+    public RepositorySrv.Iface repositorySrv(ClientEventListener listenerSrv) throws IOException {
         return clientBuilderRepository()
-                .withEventListener(repositoryListener())
+                .withEventListener(listenerSrv)
                 .withAddress(properties.getRepository().getURI())
                 .build(RepositorySrv.Iface.class);
     }
 
     @Bean
-    public ClientEventListener repositoryListener() {
+    @ConditionalOnMissingBean
+    public ClientEventListener listenerSrv() {
         return new CompositeClientEventListener(
                 new ClientEventLogListener(),
                 new HttpClientEventLogListener()

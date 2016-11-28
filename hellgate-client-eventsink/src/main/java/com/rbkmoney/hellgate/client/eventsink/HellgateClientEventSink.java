@@ -20,7 +20,7 @@ public class HellgateClientEventSink implements EventSinkSrv.Iface {
 
     @Override
     public List<Event> getEvents(EventRange eventRange) throws EventNotFound, InvalidRequest, TException {
-        LOGGER.info("Hellgate EventSink: getEvents start");
+        LOGGER.info("Hellgate EventSink: getEvents start with eventRange {}", eventRange);
         List<Event> events = eventSink.getEvents(eventRange);
         LOGGER.info("Hellgate EventSink: getEvents finish");
         return events;
@@ -30,7 +30,7 @@ public class HellgateClientEventSink implements EventSinkSrv.Iface {
     public long getLastEventID() throws NoLastEvent, TException {
         LOGGER.info("Hellgate EventSink: getLastEventID start");
         long lastEventID = eventSink.getLastEventID();
-        LOGGER.info("Hellgate EventSink: getLastEventID finish");
+        LOGGER.info("Hellgate EventSink: getLastEventID finish with lastEventID {}", lastEventID);
         return lastEventID;
     }
 }
