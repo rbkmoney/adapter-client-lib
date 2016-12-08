@@ -13,7 +13,7 @@
 
     <groupId>com.rbkmoney.proxy-libs</groupId>
     <artifactId>proxy-libs</artifactId>
-    <version>1.99-557f549</version>
+    <version>1.108-35f8043</version>
     <packaging>pom</packaging>
 
     <properties>
@@ -59,7 +59,7 @@
             <dependency>
                 <groupId>com.rbkmoney</groupId>
                 <artifactId>damsel</artifactId>
-                <version>1.99-557f549</version>
+                <version>1.108-35f8043</version>
             </dependency>
             <!-- tests -->
             <dependency>
