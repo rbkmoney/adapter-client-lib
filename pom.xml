@@ -7,13 +7,13 @@
     <parent>
         <groupId>com.rbkmoney</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>1.4.1.RELEASE</version>
+        <version>1.5.1.RELEASE</version>
         <relativePath/>
     </parent>
 
     <groupId>com.rbkmoney.proxy-libs</groupId>
     <artifactId>proxy-libs</artifactId>
-    <version>1.108-35f8043</version>
+    <version>1.249-4529702</version>
     <packaging>pom</packaging>
 
     <properties>
@@ -28,23 +28,25 @@
     <modules>
         <module>cds-client-keyring</module>
         <module>cds-client-storage</module>
-        <module>dominant-client-repository</module>
+        <module>cds-client-identity-document-storage</module>
         <module>hellgate-client-proxy-host-provider</module>
-        <module>hellgate-client-invoicing</module>
-        <module>hellgate-client-party-management</module>
-        <module>hellgate-client-eventsink</module>
+        <module>wrapper-damsel</module>
     </modules>
 
     <build>
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-compiler-plugin</artifactId>
-                <version>2.3.2</version>
-                <configuration>
-                    <source>${java.version}</source>
-                    <target>${java.version}</target>
-                </configuration>
+                <artifactId>maven-source-plugin</artifactId>
+                <version>3.0.1</version>
+                <executions>
+                    <execution>
+                        <id>attach-sources</id>
+                        <goals>
+                            <goal>jar</goal>
+                        </goals>
+                    </execution>
+                </executions>
             </plugin>
         </plugins>
     </build>
@@ -54,12 +56,17 @@
             <dependency>
                 <groupId>com.rbkmoney.woody</groupId>
                 <artifactId>woody-thrift</artifactId>
-                <version>1.0.4</version>
+                <version>1.1.13</version>
             </dependency>
             <dependency>
                 <groupId>com.rbkmoney</groupId>
                 <artifactId>damsel</artifactId>
-                <version>1.108-35f8043</version>
+                <version>1.249-4529702</version>
+            </dependency>
+            <dependency>
+                <groupId>com.rbkmoney</groupId>
+                <artifactId>identdocstore-proto</artifactId>
+                <version>1.6-ccd301e</version>
             </dependency>
             <!-- tests -->
             <dependency>

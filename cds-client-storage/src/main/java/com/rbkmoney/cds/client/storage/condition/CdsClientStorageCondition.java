@@ -12,20 +12,23 @@ import org.springframework.util.StringUtils;
 public class CdsClientStorageCondition extends SpringBootCondition {
 
     @Override
-    public ConditionOutcome getMatchOutcome(ConditionContext context,
-                                            AnnotatedTypeMetadata annotatedTypeMetadata) {
+    public ConditionOutcome getMatchOutcome(
+            ConditionContext context,
+            AnnotatedTypeMetadata annotatedTypeMetadata
+    ) {
 
         if (isUrlEmpty(context.getEnvironment())) {
             return ConditionOutcome.noMatch(
-                    "CDS Client Storage is disabled, because 'rbkmoney.cds.client.url.storage' is empty.");
+                    "CDS Client Storage is disabled, because 'cds.client.storage.url' is empty.");
         }
 
         return ConditionOutcome.match();
     }
 
     private boolean isUrlEmpty(Environment env) {
-        RelaxedPropertyResolver resolver = new RelaxedPropertyResolver(env, "rbkmoney.cds.client.url.");
-        return StringUtils.isEmpty(resolver.getProperty("storage", ""));
+        RelaxedPropertyResolver resolver = new RelaxedPropertyResolver(env, "cds.client.storage.");
+        return StringUtils.isEmpty(resolver.getProperty("url", ""));
     }
 
 }
+

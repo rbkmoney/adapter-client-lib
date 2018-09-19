@@ -11,21 +11,31 @@ import org.springframework.util.StringUtils;
 
 public class CdsClientKeyringCondition extends SpringBootCondition {
 
+    public static final String DEFAULT_TIMEOUT = "5000";
+
+
     @Override
-    public ConditionOutcome getMatchOutcome(ConditionContext context,
-                                            AnnotatedTypeMetadata annotatedTypeMetadata) {
+    public ConditionOutcome getMatchOutcome(
+            ConditionContext context,
+            AnnotatedTypeMetadata annotatedTypeMetadata
+    ) {
 
         if (isUrlEmpty(context.getEnvironment())) {
             return ConditionOutcome.noMatch(
-                    "CDS Client Keyring is disabled, because 'rbkmoney.cds.client.url.keyring' is empty.");
+                    "CDS Client Keyring is disabled, because 'cds.client.keyring.url' is empty.");
         }
 
         return ConditionOutcome.match();
     }
 
     private boolean isUrlEmpty(Environment env) {
-        RelaxedPropertyResolver resolver = new RelaxedPropertyResolver(env, "rbkmoney.cds.client.url.");
-        return StringUtils.isEmpty(resolver.getProperty("keyring", ""));
+        RelaxedPropertyResolver resolver = new RelaxedPropertyResolver(env, "cds.client.keyring.");
+        return StringUtils.isEmpty(resolver.getProperty("url", ""));
+    }
+
+    private boolean isTimeoutEmpty(Environment env) {
+        RelaxedPropertyResolver resolver = new RelaxedPropertyResolver(env, "cds.client.keyring.");
+        return StringUtils.isEmpty(resolver.getProperty("timeout", DEFAULT_TIMEOUT));
     }
 
 }

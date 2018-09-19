@@ -1,10 +1,8 @@
 package com.rbkmoney.hellgate.client.proxy.host.provider;
 
-import com.rbkmoney.damsel.base.TryLater;
-import com.rbkmoney.damsel.proxy_provider.CallbackResult;
-import com.rbkmoney.damsel.proxy_provider.Context;
-import com.rbkmoney.damsel.proxy_provider.ProviderProxySrv;
-import com.rbkmoney.damsel.proxy_provider.ProxyResult;
+
+import com.rbkmoney.damsel.proxy_provider.ProviderProxyHostSrv;
+import com.rbkmoney.hellgate.client.proxy.host.provider.exception.HellgateProxyHostProviderException;
 import org.apache.thrift.TException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -14,26 +12,60 @@ import org.springframework.stereotype.Component;
 import java.nio.ByteBuffer;
 
 @Component
-public class HellgateClientProxyHostProvider implements ProviderProxySrv.Iface {
+public class HellgateClientProxyHostProvider {
 
-    private final static Logger LOGGER = LoggerFactory.getLogger(HellgateClientProxyHostProvider.class);
+    private Logger log = LoggerFactory.getLogger(this.getClass());
 
+    private ProviderProxyHostSrv.Iface providerProxyHostSrv;
+
+
+    // ------------------------------------------------------------------------
+    // Constructors
+    // ------------------------------------------------------------------------
+
+    /**
+     * Constructs a new {@link HellgateClientProxyHostProvider} instance.
+     */
+    public HellgateClientProxyHostProvider() {
+        // Constructs default a new {@link HellgateClientProxyHostProvider} instance.
+    }
+
+    /**
+     * Constructs a new {@link HellgateClientProxyHostProvider} instance with the given
+     * initial parameters to be constructed.
+     *
+     * @param providerProxyHostSrv the field's providerProxyHostSrv (see {@link #providerProxyHostSrv}).
+     */
     @Autowired
-    private ProviderProxySrv.Iface providerProxy;
-
-    @Override
-    public ProxyResult processPayment(Context context) throws TryLater, TException {
-        LOGGER.info("Hellgate ProviderProxy: processPayment start");
-        ProxyResult response = providerProxy.processPayment(context);
-        LOGGER.info("Hellgate ProviderProxy: processPayment finish");
-        return response;
+    public HellgateClientProxyHostProvider(ProviderProxyHostSrv.Iface providerProxyHostSrv) {
+        this.providerProxyHostSrv = providerProxyHostSrv;
     }
 
-    @Override
-    public CallbackResult handlePaymentCallback(ByteBuffer byteBuffer, Context context) throws TryLater, TException {
-        LOGGER.info("Hellgate ProviderProxy: handlePaymentCallback start");
-        CallbackResult response = providerProxy.handlePaymentCallback(byteBuffer, context);
-        LOGGER.info("Hellgate ProviderProxy: handlePaymentCallback finish");
-        return response;
+
+    // ------------------------------------------------------------------------
+    // Public methods
+    // ------------------------------------------------------------------------
+
+    public ByteBuffer processPaymentCallback(String tag, ByteBuffer callback) {
+        log.info("processPaymentCallback start with tag {}", tag);
+        try {
+            ByteBuffer callbackResponse = providerProxyHostSrv.processPaymentCallback(tag, callback);
+            log.info("processPaymentCallback finish with tag {}", tag);
+            return callbackResponse;
+        } catch (TException ex) {
+            throw new HellgateProxyHostProviderException(String.format("Exception in processPaymentCallback with tag: %s", tag), ex);
+        }
     }
+
+    public ByteBuffer processRecurrentTokenCallback(String tag, ByteBuffer callback) {
+        log.info("processRecurrentTokenCallback start with tag {}", tag);
+        try {
+            ByteBuffer callbackResponse = providerProxyHostSrv.processRecurrentTokenCallback(tag, callback);
+            log.info("processRecurrentTokenCallback finish with tag {}", tag);
+            return callbackResponse;
+        } catch (TException ex) {
+            throw new HellgateProxyHostProviderException(String.format("Exception in processRecurrentTokenCallback with tag: %s", tag), ex);
+        }
+    }
+
 }

@@ -22,7 +22,7 @@ public class CdsClientKeyringPropertiesTest {
 
     @Test
     public void testSetAndGetUrl() {
-        properties.setKeyring(resource);
-        Assert.assertNotNull(properties.getKeyring());
+        properties.setUrl(resource);
+        Assert.assertNotNull(properties.getUrl());
     }
 }

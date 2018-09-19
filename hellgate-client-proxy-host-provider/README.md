@@ -10,18 +10,18 @@ Hellgate
 <dependency>
     <groupId>com.rbkmoney.proxy-libs</groupId>
     <artifactId>hellgate-client-proxy-host-provider</artifactId>
-    <version>1.99-557f549</version>
+    <version>1.249-4529702</version>
 </dependency>
 ```
 
 и в `application.yml`
 
 ```
-rbkmoney:
-  hellgate:
-    client:
-      url:
-        proxy-host-provider: http://127.0.0.1:8022/v1/proxyhost/provider
+hellgate:
+  client:
+    proxy-host-provider:
+      url: http://127.0.0.1:8022/v1/proxyhost/provider
+      timeout: 30000
 ```
 
 При подключенной зависимости без указания настроек в `application.yml` и запуске приложения - оно выдаст ошибку, что не был указан URL и как это исправить

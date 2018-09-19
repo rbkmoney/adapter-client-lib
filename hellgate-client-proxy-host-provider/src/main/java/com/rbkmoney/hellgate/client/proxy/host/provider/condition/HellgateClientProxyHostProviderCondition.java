@@ -11,21 +11,30 @@ import org.springframework.util.StringUtils;
 
 public class HellgateClientProxyHostProviderCondition extends SpringBootCondition {
 
+    public static final String DEFAULT_TIMEOUT = "5000";
+
     @Override
-    public ConditionOutcome getMatchOutcome(ConditionContext context,
-                                            AnnotatedTypeMetadata annotatedTypeMetadata) {
+    public ConditionOutcome getMatchOutcome(
+            ConditionContext context,
+            AnnotatedTypeMetadata annotatedTypeMetadata
+    ) {
 
         if (isUrlProxyHostProviderEmpty(context.getEnvironment())) {
             return ConditionOutcome.noMatch(
-                    "Hellgate Client Proxy Host Provider is disabled, because 'rbkmoney.hellgate.client.url.proxy-host-provider' is empty.");
+                    "Hellgate Client Proxy Host Provider is disabled, because 'hellgate.client.proxy-host-provider.url' is empty.");
         }
 
         return ConditionOutcome.match();
     }
 
     private boolean isUrlProxyHostProviderEmpty(Environment env) {
-        RelaxedPropertyResolver resolver = new RelaxedPropertyResolver(env, "rbkmoney.hellgate.client.url.");
-        return StringUtils.isEmpty(resolver.getProperty("proxy-host-provider", ""));
+        RelaxedPropertyResolver resolver = new RelaxedPropertyResolver(env, "hellgate.client.proxy-host-provider.");
+        return StringUtils.isEmpty(resolver.getProperty("url", ""));
+    }
+
+    private boolean isTimeoutEmpty(Environment env) {
+        RelaxedPropertyResolver resolver = new RelaxedPropertyResolver(env, "hellgate.client.proxy-host-provider.");
+        return StringUtils.isEmpty(resolver.getProperty("timeout", DEFAULT_TIMEOUT));
     }
 
 }

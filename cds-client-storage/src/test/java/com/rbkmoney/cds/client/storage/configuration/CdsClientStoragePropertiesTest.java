@@ -22,7 +22,7 @@ public class CdsClientStoragePropertiesTest {
 
     @Test
     public void testSetAndGetUrl() {
-        properties.setStorage(resource);
-        Assert.assertNotNull(properties.getStorage());
+        properties.setUrl(resource);
+        Assert.assertNotNull(properties.getUrl());
     }
 }

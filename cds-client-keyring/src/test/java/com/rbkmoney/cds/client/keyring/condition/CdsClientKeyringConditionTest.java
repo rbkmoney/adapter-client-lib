@@ -34,7 +34,7 @@ public class CdsClientKeyringConditionTest {
     @Test
     public void testNonEmptyUrl() {
         MockEnvironment environment = new MockEnvironment();
-        environment.setProperty("rbkmoney.cds.client.url.keyring", "http://127.0.0.1:8022/keyring");
+        environment.setProperty("cds.client.keyring.url", "http://127.0.0.1:8022/keyring");
         BDDMockito.given(conditionContext.getEnvironment()).willReturn(environment);
         assertTrue(condition.getMatchOutcome(conditionContext, annotatedTypeMetadata).isMatch());
     }

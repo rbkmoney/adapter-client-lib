@@ -22,8 +22,8 @@ public class HellgateClientProxyHostProviderPropertiesTest {
 
     @Test
     public void testSetAndGetUrl() {
-        properties.setProxyHostProvider(resource);
-        Assert.assertNotNull(properties.getProxyHostProvider());
+        properties.setUrl(resource);
+        Assert.assertNotNull(properties.getUrl());
     }
 
 }

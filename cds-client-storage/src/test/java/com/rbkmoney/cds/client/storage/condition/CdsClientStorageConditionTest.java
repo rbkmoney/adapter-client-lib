@@ -34,7 +34,7 @@ public class CdsClientStorageConditionTest {
     @Test
     public void testNonEmptyUrl() {
         MockEnvironment environment = new MockEnvironment();
-        environment.setProperty("rbkmoney.cds.client.url.storage", "http://127.0.0.1:8022/storage");
+        environment.setProperty("cds.client.storage.url", "http://127.0.0.1:8022/storage");
         BDDMockito.given(conditionContext.getEnvironment()).willReturn(environment);
         assertTrue(condition.getMatchOutcome(conditionContext, annotatedTypeMetadata).isMatch());
     }

@@ -1,8 +1,8 @@
 package com.rbkmoney.cds.client.keyring;
 
+import com.rbkmoney.cds.client.keyring.exception.CdsKeyringException;
 import com.rbkmoney.damsel.cds.KeyringSrv;
 import com.rbkmoney.damsel.cds.UnlockStatus;
-import org.apache.thrift.TException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,23 +14,49 @@ import java.util.List;
 @Component
 public class CdsClientKeyring {
 
-    private final static Logger LOGGER = LoggerFactory.getLogger(CdsClientKeyring.class);
+    private Logger log = LoggerFactory.getLogger(this.getClass());
 
-    @Autowired
     private KeyringSrv.Iface keyringSrv;
+
+
+    // ------------------------------------------------------------------------
+    // Constructors
+    // ------------------------------------------------------------------------
+
+    /**
+     * Constructs a new {@link CdsClientKeyring} instance.
+     */
+    public CdsClientKeyring() {
+        // Constructs default a new {@link CdsClientKeyring} instance.
+    }
+
+    /**
+     * Constructs a new {@link CdsClientKeyring} instance with the given
+     * initial parameters to be constructed.
+     *
+     * @param keyringSrv the field's keyringSrv (see {@link #keyringSrv}).
+     */
+    @Autowired
+    public CdsClientKeyring(KeyringSrv.Iface keyringSrv) {
+        this.keyringSrv = keyringSrv;
+    }
+
 
     /**
      * Unlock Keys
      *
      * @param key_share ByteBuffer
      * @return UnlockStatus
-     * @throws TException
      */
-    public UnlockStatus unlock(ByteBuffer key_share) throws TException {
-        LOGGER.info("Keyring: unlock start");
-        UnlockStatus unlockStatus = keyringSrv.unlock(key_share);
-        LOGGER.info("Keyring: unlock finish");
-        return unlockStatus;
+    public UnlockStatus unlock(ByteBuffer key_share) {
+        log.info("Keyring: unlock start");
+        try {
+            UnlockStatus unlockStatus = keyringSrv.unlock(key_share);
+            log.info("Keyring: unlock finish");
+            return unlockStatus;
+        } catch (Exception ex) {
+            throw new CdsKeyringException("Keyring. Exception - unlock", ex);
+        }
     }
 
     /**
@@ -39,35 +65,42 @@ public class CdsClientKeyring {
      * @param threshold  short
      * @param num_shares short
      * @return List<ByteBuffer>
-     * @throws TException
      */
-    public List<ByteBuffer> init(short threshold, short num_shares) throws TException {
-        LOGGER.info("Keyring: init start");
-        List<ByteBuffer> list = keyringSrv.init(threshold, num_shares);
-        LOGGER.info("Keyring: init finish");
-        return list;
+    public List<ByteBuffer> init(short threshold, short num_shares) {
+        log.info("Keyring: init start");
+        try {
+            List<ByteBuffer> list = keyringSrv.init(threshold, num_shares);
+            log.info("Keyring: init finish");
+            return list;
+        } catch (Exception ex) {
+            throw new CdsKeyringException("Keyring. Exception - init", ex);
+        }
     }
 
     /**
      * Lock
-     *
-     * @throws TException
      */
-    public void lock() throws TException {
-        LOGGER.info("Keyring: lock start");
-        keyringSrv.lock();
-        LOGGER.info("Keyring: lock finish");
+    public void lock() {
+        log.info("Keyring: lock start");
+        try {
+            keyringSrv.lock();
+            log.info("Keyring: lock finish");
+        } catch (Exception ex) {
+            throw new CdsKeyringException("Keyring. Exception - lock", ex);
+        }
     }
 
     /**
      * Rotate
-     *
-     * @throws TException
      */
-    public void rotate() throws TException {
-        LOGGER.info("Keyring: rotate start");
-        keyringSrv.rotate();
-        LOGGER.info("Keyring: rotate finish");
+    public void rotate() {
+        log.info("Keyring: rotate start");
+        try {
+            keyringSrv.rotate();
+            log.info("Keyring: rotate finish");
+        } catch (Exception ex) {
+            throw new CdsKeyringException("Keyring. Exception - rotate", ex);
+        }
     }
 
 }
