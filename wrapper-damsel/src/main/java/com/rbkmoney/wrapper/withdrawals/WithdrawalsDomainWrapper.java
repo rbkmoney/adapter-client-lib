@@ -1,7 +1,7 @@
-package com.rbkmoney.withdrawals;
+package com.rbkmoney.wrapper.withdrawals;
 
-import com.rbkmoney.damsel.DomainWrapper;
 import com.rbkmoney.damsel.domain.TransactionInfo;
+import com.rbkmoney.wrapper.damsel.DomainWrapper;
 
 import java.util.Map;
 

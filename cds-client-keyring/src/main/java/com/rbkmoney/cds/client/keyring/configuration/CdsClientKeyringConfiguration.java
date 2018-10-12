@@ -1,18 +1,15 @@
 package com.rbkmoney.cds.client.keyring.configuration;
 
-import com.rbkmoney.cds.client.keyring.condition.CdsClientKeyringCondition;
 import com.rbkmoney.damsel.cds.KeyringSrv;
 import com.rbkmoney.woody.thrift.impl.http.THSpawnClientBuilder;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Conditional;
 import org.springframework.context.annotation.Configuration;
 
 import java.io.IOException;
 
 @Configuration
 @EnableConfigurationProperties(CdsClientKeyringProperties.class)
-@Conditional(CdsClientKeyringCondition.class)
 public class CdsClientKeyringConfiguration {
 
     @Bean

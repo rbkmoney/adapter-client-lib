@@ -1,4 +1,4 @@
-package com.rbkmoney.damsel;
+package com.rbkmoney.wrapper.damsel;
 
 import com.rbkmoney.damsel.user_interaction.BrowserGetRequest;
 import com.rbkmoney.damsel.user_interaction.BrowserHTTPRequest;

@@ -7,7 +7,7 @@
     <parent>
         <groupId>com.rbkmoney.proxy-libs</groupId>
         <artifactId>proxy-libs</artifactId>
-        <version>1.249-4529702</version>
+        <version>1.263-970089c</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
 
@@ -29,10 +29,16 @@
         <dependency>
             <groupId>com.rbkmoney.woody</groupId>
             <artifactId>woody-thrift</artifactId>
+            <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>com.rbkmoney</groupId>
             <artifactId>damsel</artifactId>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>javax.validation</groupId>
+            <artifactId>validation-api</artifactId>
         </dependency>
         <!--Test libs-->
         <dependency>

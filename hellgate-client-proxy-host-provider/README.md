@@ -10,7 +10,21 @@ Hellgate
 <dependency>
     <groupId>com.rbkmoney.proxy-libs</groupId>
     <artifactId>hellgate-client-proxy-host-provider</artifactId>
-    <version>1.249-4529702</version>
+    <version>1.263-970089c</version>
+</dependency>
+```
+
+В зависимостях также должны быть указаны
+```
+<dependency>
+    <groupId>com.rbkmoney.woody</groupId>
+    <artifactId>woody-thrift</artifactId>
+    <version>1.1.15</version>
+</dependency>
+<dependency>
+    <groupId>com.rbkmoney</groupId>
+    <artifactId>damsel</artifactId>
+    <version>1.263-970089c</version>
 </dependency>
 ```
 

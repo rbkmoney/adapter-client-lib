@@ -1,11 +1,17 @@
 package com.rbkmoney.cds.client.keyring.configuration;
 
+
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.core.io.Resource;
+import org.springframework.validation.annotation.Validated;
+
+import javax.validation.constraints.NotNull;
 
 @ConfigurationProperties(prefix = "cds.client.keyring")
+@Validated
 public class CdsClientKeyringProperties {
 
+    @NotNull
     private Resource url;
 
     private Integer timeout = 5000;

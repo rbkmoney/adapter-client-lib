@@ -3,6 +3,7 @@ package com.rbkmoney.cds.client.identity.document.storage;
 import com.rbkmoney.cds.client.identity.document.storage.exception.CdsIDStorageException;
 import com.rbkmoney.damsel.identity_document_storage.IdentityDocument;
 import com.rbkmoney.damsel.identity_document_storage.IdentityDocumentStorageSrv;
+import org.apache.thrift.TException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,19 +14,12 @@ public class CdsClientIDStorage {
 
     private Logger log = LoggerFactory.getLogger(this.getClass());
 
-    private IdentityDocumentStorageSrv.Iface cdsIDStorageApi;
+    private final IdentityDocumentStorageSrv.Iface cdsIDStorageApi;
 
 
     // ------------------------------------------------------------------------
     // Constructors
     // ------------------------------------------------------------------------
-
-    /**
-     * Constructs a new {@link CdsClientIDStorage} instance.
-     */
-    public CdsClientIDStorage() {
-        // Constructs default a new {@link CdsIDStorageApi CdsIDStorageApi} instance.
-    }
 
     /**
      * Constructs a new {@link CdsClientIDStorage} instance with the given
@@ -49,7 +43,7 @@ public class CdsClientIDStorage {
             String response = cdsIDStorageApi.put(identity_document);
             log.info("putIdentityDocument: response {}, identity_document: {}", response, identity_document);
             return response;
-        } catch (Exception ex) {
+        } catch (TException ex) {
             throw new CdsIDStorageException(String.format("Exception in putIdentityDocument with identity_document: %s", identity_document), ex);
         }
     }
@@ -60,7 +54,7 @@ public class CdsClientIDStorage {
             IdentityDocument identityDocument = cdsIDStorageApi.get(token);
             log.info("getIdentityDocument: response, token: {}", token);
             return identityDocument;
-        } catch (Exception ex) {
+        } catch (TException ex) {
             throw new CdsIDStorageException(String.format("Exception in getIdentityDocument with token: %s", token), ex);
         }
     }

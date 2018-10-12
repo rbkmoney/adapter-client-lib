@@ -10,7 +10,7 @@ Damsel
 <dependency>
     <groupId>com.rbkmoney</groupId>
     <artifactId>wrapper-damsel</artifactId>
-    <version>1.249-4529702</version>
+    <version>1.263-970089c</version>
 </dependency>
 ```
 

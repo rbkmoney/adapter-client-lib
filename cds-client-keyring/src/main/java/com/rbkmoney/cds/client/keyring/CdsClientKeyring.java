@@ -3,6 +3,7 @@ package com.rbkmoney.cds.client.keyring;
 import com.rbkmoney.cds.client.keyring.exception.CdsKeyringException;
 import com.rbkmoney.damsel.cds.KeyringSrv;
 import com.rbkmoney.damsel.cds.UnlockStatus;
+import org.apache.thrift.TException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,19 +17,12 @@ public class CdsClientKeyring {
 
     private Logger log = LoggerFactory.getLogger(this.getClass());
 
-    private KeyringSrv.Iface keyringSrv;
+    private final KeyringSrv.Iface keyringSrv;
 
 
     // ------------------------------------------------------------------------
     // Constructors
     // ------------------------------------------------------------------------
-
-    /**
-     * Constructs a new {@link CdsClientKeyring} instance.
-     */
-    public CdsClientKeyring() {
-        // Constructs default a new {@link CdsClientKeyring} instance.
-    }
 
     /**
      * Constructs a new {@link CdsClientKeyring} instance with the given
@@ -54,7 +48,7 @@ public class CdsClientKeyring {
             UnlockStatus unlockStatus = keyringSrv.unlock(key_share);
             log.info("Keyring: unlock finish");
             return unlockStatus;
-        } catch (Exception ex) {
+        } catch (TException ex) {
             throw new CdsKeyringException("Keyring. Exception - unlock", ex);
         }
     }
@@ -72,7 +66,7 @@ public class CdsClientKeyring {
             List<ByteBuffer> list = keyringSrv.init(threshold, num_shares);
             log.info("Keyring: init finish");
             return list;
-        } catch (Exception ex) {
+        } catch (TException ex) {
             throw new CdsKeyringException("Keyring. Exception - init", ex);
         }
     }
@@ -85,7 +79,7 @@ public class CdsClientKeyring {
         try {
             keyringSrv.lock();
             log.info("Keyring: lock finish");
-        } catch (Exception ex) {
+        } catch (TException ex) {
             throw new CdsKeyringException("Keyring. Exception - lock", ex);
         }
     }
@@ -98,7 +92,7 @@ public class CdsClientKeyring {
         try {
             keyringSrv.rotate();
             log.info("Keyring: rotate finish");
-        } catch (Exception ex) {
+        } catch (TException ex) {
             throw new CdsKeyringException("Keyring. Exception - rotate", ex);
         }
     }

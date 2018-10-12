@@ -2,10 +2,15 @@ package com.rbkmoney.cds.client.identity.document.storage.configuration;
 
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.core.io.Resource;
+import org.springframework.validation.annotation.Validated;
+
+import javax.validation.constraints.NotNull;
 
 @ConfigurationProperties(prefix = "cds.client.identity-document-storage")
+@Validated
 public class CdsClientIDStorageProperties {
 
+    @NotNull
     private Resource url;
 
     private Integer timeout = 5000;

@@ -1,18 +1,15 @@
 package com.rbkmoney.hellgate.client.proxy.host.provider.configuration;
 
 import com.rbkmoney.damsel.proxy_provider.ProviderProxyHostSrv;
-import com.rbkmoney.hellgate.client.proxy.host.provider.condition.HellgateClientProxyHostProviderCondition;
 import com.rbkmoney.woody.thrift.impl.http.THSpawnClientBuilder;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Conditional;
 import org.springframework.context.annotation.Configuration;
 
 import java.io.IOException;
 
 @Configuration
 @EnableConfigurationProperties({HellgateClientProxyHostProviderProperties.class})
-@Conditional(HellgateClientProxyHostProviderCondition.class)
 public class HellgateClientProxyHostProviderConfiguration {
 
     @Bean

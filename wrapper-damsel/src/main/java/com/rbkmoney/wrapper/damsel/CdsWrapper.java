@@ -1,4 +1,4 @@
-package com.rbkmoney.damsel;
+package com.rbkmoney.wrapper.damsel;
 
 
 import com.rbkmoney.damsel.cds.*;
@@ -40,9 +40,6 @@ public class CdsWrapper {
         return AuthData.auth_3ds(auth3DS);
     }
 
-    public static CardSecurityCode makeCardSecurityCode(String cvv) {
-        return new CardSecurityCode(cvv);
-    }
 
     public static Auth3DS makeAuth3DS(String cryptogram, String eci) {
         return new Auth3DS(cryptogram).setEci(eci);
@@ -53,7 +50,7 @@ public class CdsWrapper {
     }
 
     public static AuthData makeAuthDataWithCardSecurityCode(String cvv) {
-        return AuthData.card_security_code(makeCardSecurityCode(cvv));
+        return AuthData.card_security_code(new CardSecurityCode(cvv));
     }
 
     public static Auth3DS makeAuth3DS(String cryptogram) {

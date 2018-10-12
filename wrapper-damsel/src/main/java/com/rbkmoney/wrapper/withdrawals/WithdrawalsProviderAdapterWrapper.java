@@ -1,4 +1,4 @@
-package com.rbkmoney.withdrawals;
+package com.rbkmoney.wrapper.withdrawals;
 
 import com.rbkmoney.damsel.domain.Failure;
 import com.rbkmoney.damsel.domain.TransactionInfo;

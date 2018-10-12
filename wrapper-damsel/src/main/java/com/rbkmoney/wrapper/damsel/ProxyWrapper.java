@@ -1,17 +1,22 @@
-package com.rbkmoney.damsel;
+package com.rbkmoney.wrapper.damsel;
 
 import com.rbkmoney.damsel.base.Timer;
 import com.rbkmoney.damsel.domain.Failure;
 import com.rbkmoney.damsel.proxy_provider.*;
 import com.rbkmoney.damsel.user_interaction.UserInteraction;
 
-import static com.rbkmoney.damsel.BaseWrapper.makeTimerTimeout;
+import static com.rbkmoney.wrapper.damsel.BaseWrapper.makeTimerTimeout;
+
 
 public class ProxyWrapper {
 
     // FinishIntent
     public static Intent makeFinishIntentSuccess() {
         return Intent.finish(new FinishIntent(ProxyWrapper.makeFinishStatusSuccess()));
+    }
+
+    public static Intent makeFinishIntentSuccessWithToken(String token) {
+        return Intent.finish(new FinishIntent(ProxyWrapper.makeFinishStatusSuccess(token)));
     }
 
     public static Intent makeFinishIntentFailure(String code, String description) {
@@ -56,6 +61,10 @@ public class ProxyWrapper {
 
     public static FinishStatus makeFinishStatusSuccess() {
         return FinishStatus.success(new Success());
+    }
+
+    public static FinishStatus makeFinishStatusSuccess(String token) {
+        return FinishStatus.success(new Success().setToken(token));
     }
 
     public static Failure makeFailure(String code, String description) {

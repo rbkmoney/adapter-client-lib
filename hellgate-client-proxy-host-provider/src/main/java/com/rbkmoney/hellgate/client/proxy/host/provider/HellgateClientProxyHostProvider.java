@@ -16,19 +16,12 @@ public class HellgateClientProxyHostProvider {
 
     private Logger log = LoggerFactory.getLogger(this.getClass());
 
-    private ProviderProxyHostSrv.Iface providerProxyHostSrv;
+    private final ProviderProxyHostSrv.Iface providerProxyHostSrv;
 
 
     // ------------------------------------------------------------------------
     // Constructors
     // ------------------------------------------------------------------------
-
-    /**
-     * Constructs a new {@link HellgateClientProxyHostProvider} instance.
-     */
-    public HellgateClientProxyHostProvider() {
-        // Constructs default a new {@link HellgateClientProxyHostProvider} instance.
-    }
 
     /**
      * Constructs a new {@link HellgateClientProxyHostProvider} instance with the given

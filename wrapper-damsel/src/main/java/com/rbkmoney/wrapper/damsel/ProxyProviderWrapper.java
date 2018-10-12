@@ -1,4 +1,4 @@
-package com.rbkmoney.damsel;
+package com.rbkmoney.wrapper.damsel;
 
 
 import com.rbkmoney.damsel.cds.CardData;
@@ -139,10 +139,6 @@ public class ProxyProviderWrapper {
         return DomainWrapper.makeCurrency(name, numericCode, symbolicCode, exponent);
     }
 
-    public static ExpDate makeExpDate(byte month, short year) {
-        return CdsWrapper.makeExpDate(month, year);
-    }
-
     public static com.rbkmoney.damsel.proxy_provider.Cash makeCash(com.rbkmoney.damsel.domain.Currency currency, Long amount) {
         return new com.rbkmoney.damsel.proxy_provider.Cash(amount, currency);
     }
@@ -156,7 +152,7 @@ public class ProxyProviderWrapper {
     }
 
     public static BankCard makeBankCard(String bin, String maskedPan, String token, BankCardPaymentSystem bankCardPaymentSystem) {
-        return DomainWrapper.makeBankCard(bin, maskedPan, token, bankCardPaymentSystem);
+        return makeBankCard(bin, maskedPan, token, bankCardPaymentSystem);
     }
 
     public static PaymentInfo makePaymentInfo(Invoice invoice, Shop shop, InvoicePayment invoicePayment) {

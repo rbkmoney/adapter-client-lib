@@ -5,34 +5,32 @@ import com.rbkmoney.damsel.cds.CardData;
 import com.rbkmoney.damsel.cds.PutCardDataResult;
 import com.rbkmoney.damsel.cds.SessionData;
 import com.rbkmoney.damsel.cds.StorageSrv;
+import com.rbkmoney.damsel.domain.BankCard;
 import com.rbkmoney.damsel.domain.DisposablePaymentResource;
 import com.rbkmoney.damsel.proxy_provider.InvoicePayment;
 import com.rbkmoney.damsel.proxy_provider.PaymentContext;
 import com.rbkmoney.damsel.proxy_provider.RecurrentTokenContext;
+import com.rbkmoney.damsel.withdrawals.domain.Destination;
 import com.rbkmoney.damsel.withdrawals.provider_adapter.Withdrawal;
+import org.apache.thrift.TException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+
+import java.util.Optional;
 
 @Component
 public class CdsClientStorage {
 
     private Logger log = LoggerFactory.getLogger(this.getClass());
 
-    private StorageSrv.Iface storageSrv;
+    private final StorageSrv.Iface storageSrv;
 
 
     // ------------------------------------------------------------------------
     // Constructors
     // ------------------------------------------------------------------------
-
-    /**
-     * Constructs a new {@link CdsClientStorage} instance.
-     */
-    public CdsClientStorage() {
-        // Constructs default a new {@link CdsClientStorage} instance.
-    }
 
     /**
      * Constructs a new {@link CdsClientStorage} instance with the given
@@ -50,55 +48,40 @@ public class CdsClientStorage {
     // Public methods
     // ------------------------------------------------------------------------
 
-    /**
-     * Get the card data without CVV
-     *
-     * @param token String
-     * @return CardData
-     */
     public CardData getCardData(final String token) {
         log.info("getCardData: token: {}", token);
         try {
             CardData cardData = storageSrv.getCardData(token);
-            log.info("getCardData: response, token: {}");
+            log.info("getCardData: response, token: {}", token);
             return cardData;
-        } catch (Exception ex) {
-            throw new CdsStorageException(String.format("Exception in getCardData with token: %s", token), ex);
+        } catch (TException ex) {
+            throw new CdsStorageException(String.format("Can't get card data with token: %s", token), ex);
         }
     }
 
     public CardData getCardData(final PaymentContext context) {
-        String invoiceId = context.getPaymentInfo().getInvoice().getId();
-
         InvoicePayment invoicePayment = context.getPaymentInfo().getPayment();
-        DisposablePaymentResource disposablePaymentResource = invoicePayment.getPaymentResource().getDisposablePaymentResource();
-
-        if (!disposablePaymentResource.getPaymentTool().getBankCard().isSetToken()) {
-            throw new CdsStorageException("getCardData: Token must be set, invoiceId " + invoiceId);
+        String token;
+        if (invoicePayment.getPaymentResource().isSetDisposablePaymentResource()) {
+            token = invoicePayment.getPaymentResource().getDisposablePaymentResource().getPaymentTool().getBankCard().getToken();
+        } else  {
+            token = invoicePayment.getPaymentResource().getRecurrentPaymentResource().getPaymentTool().getBankCard().getToken();
         }
-
-        String token = disposablePaymentResource.getPaymentTool().getBankCard().getToken();
         return getCardData(token);
     }
 
     public CardData getCardData(final Withdrawal withdrawal) {
         String withdrawalId = withdrawal.getId();
 
-        String token = null;
-        if(withdrawal.isSetDestination()) {
-            if(withdrawal.getDestination().isSetBankCard()) {
-                if(withdrawal.getDestination().getBankCard().isSetToken()) {
-                    token = withdrawal.getDestination().getBankCard().getToken();
-                }
-            }
+        Optional<String> token = Optional.ofNullable(withdrawal.getDestination())
+                .map(Destination::getBankCard)
+                .map(BankCard::getToken);
+
+        if (!token.isPresent()) {
+            throw new CdsStorageException("Token must be set for card data, withdrawalId " + withdrawalId);
         }
 
-
-        if (token == null) {
-            throw new CdsStorageException("getCardData: Token must be set, withdrawalId " + withdrawalId);
-        }
-
-        return getCardData(token);
+        return getCardData(token.get());
     }
 
     public SessionData getSessionData(final PaymentContext context) {
@@ -108,17 +91,10 @@ public class CdsClientStorage {
         DisposablePaymentResource disposablePaymentResource = invoicePayment.getPaymentResource().getDisposablePaymentResource();
 
         if (!disposablePaymentResource.isSetPaymentSessionId()) {
-            throw new CdsStorageException("getSessionData: Session must be set, invoiceId " + invoiceId);
+            throw new CdsStorageException("Session must be set for session data, invoiceId " + invoiceId);
         }
 
-        String session = disposablePaymentResource.getPaymentSessionId();
-        try {
-            SessionData sessionData = storageSrv.getSessionData(session);
-            log.info("Storage getSessionData: finish");
-            return sessionData;
-        } catch (Exception ex) {
-            throw new CdsStorageException("Exception in getSessionData with SessionData", ex);
-        }
+        return getSessionDataBySessionId(disposablePaymentResource.getPaymentSessionId());
     }
 
     public CardData getCardData(final RecurrentTokenContext context) {
@@ -126,7 +102,7 @@ public class CdsClientStorage {
         DisposablePaymentResource disposablePaymentResource = context.getTokenInfo().getPaymentTool().getPaymentResource();
 
         if (!disposablePaymentResource.isSetPaymentSessionId()) {
-            throw new CdsStorageException("getSessionData: Session must be set, recurrentId " + recurrentId);
+            throw new CdsStorageException("Session Id must be set, recurrentId " + recurrentId);
         }
 
         String token = disposablePaymentResource.getPaymentTool().getBankCard().getToken();
@@ -138,33 +114,30 @@ public class CdsClientStorage {
         DisposablePaymentResource disposablePaymentResource = context.getTokenInfo().getPaymentTool().getPaymentResource();
 
         if (!disposablePaymentResource.isSetPaymentSessionId()) {
-            throw new CdsStorageException("getSessionData: Session must be set, recurrentId " + recurrentId);
+            throw new CdsStorageException("Session Id must be set, recurrentId " + recurrentId);
         }
 
-        String session = disposablePaymentResource.getPaymentSessionId();
+        return getSessionDataBySessionId(disposablePaymentResource.getPaymentSessionId());
+    }
+
+    public SessionData getSessionDataBySessionId(String sessionId) {
         try {
-            SessionData sessionData = storageSrv.getSessionData(session);
+            SessionData sessionData = storageSrv.getSessionData(sessionId);
             log.info("Storage getSessionData: finish");
             return sessionData;
-        } catch (Exception ex) {
-            throw new CdsStorageException("Exception in getSessionData with SessionData", ex);
+        } catch (TException ex) {
+            throw new CdsStorageException("Can't get session data by session Id "+ sessionId, ex);
         }
     }
 
-    /**
-     * Put the card data
-     *
-     * @param cardData CardData
-     * @return PutCardDataResult
-     */
     public PutCardDataResult putCardData(CardData cardData, SessionData sessionData) throws CdsStorageException {
         log.info("Storage putCardData - start");
         try {
             PutCardDataResult result = storageSrv.putCardData(cardData, sessionData);
             log.info("Storage putCardData: finish");
             return result;
-        } catch (Exception ex) {
-            throw new CdsStorageException("Exception in putCardData with cardData", ex);
+        } catch (TException ex) {
+            throw new CdsStorageException("Can't put card data", ex);
         }
     }
 

@@ -1,18 +1,15 @@
 package com.rbkmoney.cds.client.storage.configuration;
 
-import com.rbkmoney.cds.client.storage.condition.CdsClientStorageCondition;
 import com.rbkmoney.damsel.cds.StorageSrv;
 import com.rbkmoney.woody.thrift.impl.http.THSpawnClientBuilder;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Conditional;
 import org.springframework.context.annotation.Configuration;
 
 import java.io.IOException;
 
 @Configuration
-@EnableConfigurationProperties({ CdsClientStorageProperties.class })
-@Conditional(CdsClientStorageCondition.class)
+@EnableConfigurationProperties({CdsClientStorageProperties.class})
 public class CdsClientStorageConfiguration {
 
     @Bean
