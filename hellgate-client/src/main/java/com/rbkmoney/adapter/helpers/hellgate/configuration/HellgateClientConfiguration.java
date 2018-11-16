@@ -1,4 +1,4 @@
-package com.rbkmoney.hellgate.client.proxy.host.provider.configuration;
+package com.rbkmoney.adapter.helpers.hellgate.configuration;
 
 import com.rbkmoney.damsel.proxy_provider.ProviderProxyHostSrv;
 import com.rbkmoney.woody.thrift.impl.http.THSpawnClientBuilder;
@@ -9,11 +9,11 @@ import org.springframework.context.annotation.Configuration;
 import java.io.IOException;
 
 @Configuration
-@EnableConfigurationProperties({HellgateClientProxyHostProviderProperties.class})
-public class HellgateClientProxyHostProviderConfiguration {
+@EnableConfigurationProperties({HellgateClientProperties.class})
+public class HellgateClientConfiguration {
 
     @Bean
-    public ProviderProxyHostSrv.Iface providerProxySrv(HellgateClientProxyHostProviderProperties properties) throws IOException {
+    public ProviderProxyHostSrv.Iface providerProxySrv(HellgateClientProperties properties) throws IOException {
         return new THSpawnClientBuilder()
                 .withAddress(properties.getUrl().getURI())
                 .withNetworkTimeout(properties.getTimeout())

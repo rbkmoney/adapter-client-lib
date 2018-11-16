@@ -1,4 +1,4 @@
-Hellgate
+Hellgate Client
 
 Обработка основного хранилища
 
@@ -9,8 +9,8 @@ Hellgate
 ```
 <dependency>
     <groupId>com.rbkmoney.proxy-libs</groupId>
-    <artifactId>hellgate-client-proxy-host-provider</artifactId>
-    <version>1.263-970089c</version>
+    <artifactId>hellgate-client</artifactId>
+    <version>1.268-45c8524</version>
 </dependency>
 ```
 
@@ -24,7 +24,7 @@ Hellgate
 <dependency>
     <groupId>com.rbkmoney</groupId>
     <artifactId>damsel</artifactId>
-    <version>1.263-970089c</version>
+    <version>1.268-45c8524</version>
 </dependency>
 ```
 
@@ -33,9 +33,8 @@ Hellgate
 ```
 hellgate:
   client:
-    proxy-host-provider:
-      url: http://127.0.0.1:8022/v1/proxyhost/provider
-      timeout: 30000
+    url: http://127.0.0.1:8022/v1/proxyhost/provider
+    timeout: 30000
 ```
 
 При подключенной зависимости без указания настроек в `application.yml` и запуске приложения - оно выдаст ошибку, что не был указан URL и как это исправить
@@ -47,5 +46,5 @@ hellgate:
 
 ```
 @Autowired
-HellgateClientProxyHostProvider client;
+HellgateClient client;
 ```
