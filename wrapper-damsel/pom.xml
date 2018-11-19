@@ -12,7 +12,7 @@
     </parent>
 
     <artifactId>wrapper-damsel</artifactId>
-    <version>1.263-970089c</version>
+    <version>1.268-45c8524</version>
     <packaging>jar</packaging>
 
     <dependencies>
@@ -24,7 +24,7 @@
         <dependency>
             <groupId>com.rbkmoney</groupId>
             <artifactId>damsel</artifactId>
-            <version>1.263-970089c</version>
+            <version>1.268-45c8524</version>
         </dependency>
     </dependencies>
 
