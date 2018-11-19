@@ -12,7 +12,7 @@
     </parent>
 
     <artifactId>wrapper-damsel</artifactId>
-    <version>1.268-45c8524</version>
+    <version>1.268-45c8524-SNAPSHOT</version>
     <packaging>jar</packaging>
 
     <dependencies>

@@ -10,7 +10,7 @@ Hellgate Client
 <dependency>
     <groupId>com.rbkmoney.proxy-libs</groupId>
     <artifactId>hellgate-adapter-client</artifactId>
-    <version>${damsel.version}</version>
+    <version>${damsel.version}-SNAPSHOT</version>
 </dependency>
 ```
 

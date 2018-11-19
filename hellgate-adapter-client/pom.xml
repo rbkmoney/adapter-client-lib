@@ -5,7 +5,7 @@
     <parent>
         <artifactId>proxy-libs</artifactId>
         <groupId>com.rbkmoney.proxy-libs</groupId>
-        <version>1.268-45c8524</version>
+        <version>1.268-45c8524-SNAPSHOT</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
     <modelVersion>4.0.0</modelVersion>
