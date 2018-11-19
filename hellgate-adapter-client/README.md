@@ -9,7 +9,7 @@ Hellgate Client
 ```
 <dependency>
     <groupId>com.rbkmoney.proxy-libs</groupId>
-    <artifactId>hellgate-client</artifactId>
+    <artifactId>hellgate-adapter-client</artifactId>
     <version>1.268-45c8524</version>
 </dependency>
 ```
@@ -46,5 +46,5 @@ hellgate:
 
 ```
 @Autowired
-HellgateClient client;
+HellgateAdapterClient client;
 ```

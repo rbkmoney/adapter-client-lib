@@ -20,7 +20,7 @@
 
 ##### Hellgate
 
-1. [hellgate-client-proxy-host-provider](hellgate-client-proxy-host-provider/README.md)
+1. [hellgate-adapter-client](hellgate-adapter-client/README.md)
 
 
 ##### Wrapper Damsel

@@ -12,7 +12,7 @@ import javax.validation.constraints.NotNull;
 @Validated
 @Getter
 @Setter
-public class HellgateClientProperties {
+public class HellgateAdapterClientProperties {
 
     @NotNull
     private Resource url;

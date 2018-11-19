@@ -9,11 +9,11 @@ import org.springframework.context.annotation.Configuration;
 import java.io.IOException;
 
 @Configuration
-@EnableConfigurationProperties({HellgateClientProperties.class})
-public class HellgateClientConfiguration {
+@EnableConfigurationProperties({HellgateAdapterClientProperties.class})
+public class HellgateAdapterClientConfiguration {
 
     @Bean
-    public ProviderProxyHostSrv.Iface providerProxySrv(HellgateClientProperties properties) throws IOException {
+    public ProviderProxyHostSrv.Iface providerProxySrv(HellgateAdapterClientProperties properties) throws IOException {
         return new THSpawnClientBuilder()
                 .withAddress(properties.getUrl().getURI())
                 .withNetworkTimeout(properties.getTimeout())

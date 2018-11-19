@@ -1,0 +1,3 @@
+org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
+com.rbkmoney.adapter.helpers.hellgate.configuration.HellgateAdapterClientConfiguration,\
+com.rbkmoney.adapter.helpers.hellgate.HellgateAdapterClient
