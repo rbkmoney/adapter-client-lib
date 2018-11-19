@@ -35,7 +35,7 @@ hellgate:
     client:
         adapter:
             url: http://127.0.0.1:8022/v1/proxyhost/provider
-            timeout: 30000
+            networkTimeout: 30000
 ```
 
 При подключенной зависимости без указания настроек в `application.yml` и запуске приложения - оно выдаст ошибку, что не был указан URL и как это исправить

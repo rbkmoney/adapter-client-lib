@@ -18,5 +18,5 @@ public class HellgateAdapterClientProperties {
     private Resource url;
 
     @NotNull
-    private int timeout = 5000;
+    private int networkTimeout = 5000;
 }
