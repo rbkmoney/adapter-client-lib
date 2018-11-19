@@ -8,7 +8,7 @@ import org.springframework.validation.annotation.Validated;
 
 import javax.validation.constraints.NotNull;
 
-@ConfigurationProperties(prefix = "hellgate.client")
+@ConfigurationProperties(prefix = "hellgate.client.adapter")
 @Validated
 @Getter
 @Setter
