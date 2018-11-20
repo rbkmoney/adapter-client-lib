@@ -10,7 +10,7 @@ Hellgate Client
 <dependency>
     <groupId>com.rbkmoney.proxy-libs</groupId>
     <artifactId>hellgate-adapter-client</artifactId>
-    <version>${damsel.version}-SNAPSHOT</version>
+    <version>${hellgate-adapter-client.version}-SNAPSHOT</version>
 </dependency>
 ```
 
@@ -19,7 +19,7 @@ Hellgate Client
 <dependency>
     <groupId>com.rbkmoney.woody</groupId>
     <artifactId>woody-thrift</artifactId>
-    <version>1.1.15</version>
+    <version>${woody-thrift.version}</version>
 </dependency>
 <dependency>
     <groupId>com.rbkmoney</groupId>

@@ -16,7 +16,7 @@ public class CdsClientKeyringConfiguration {
     public KeyringSrv.Iface keyringSrv(CdsClientKeyringProperties properties) throws IOException {
         return new THSpawnClientBuilder()
                 .withAddress(properties.getUrl().getURI())
-                .withNetworkTimeout(properties.getTimeout())
+                .withNetworkTimeout(properties.getNetworkTimeout())
                 .build(KeyringSrv.Iface.class);
     }
 

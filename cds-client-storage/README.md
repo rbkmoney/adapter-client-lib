@@ -10,7 +10,7 @@ CDS Client Storage
 <dependency>
     <groupId>com.rbkmoney.proxy-libs</groupId>
     <artifactId>cds-client-storage</artifactId>
-    <version>1.263-970089c</version>
+    <version>${cds-client-storage.version}</version>
 </dependency>
 ```
 
@@ -19,12 +19,12 @@ CDS Client Storage
 <dependency>
     <groupId>com.rbkmoney.woody</groupId>
     <artifactId>woody-thrift</artifactId>
-    <version>1.1.15</version>
+    <version>${woody-thrift.version}</version>
 </dependency>
 <dependency>
     <groupId>com.rbkmoney</groupId>
     <artifactId>damsel</artifactId>
-    <version>1.263-970089c</version>
+    <version>${damsel.version}</version>
 </dependency>
 ```
 
@@ -35,7 +35,7 @@ cds:
   client:
     storage:
       url: http://127.0.0.1:8022/v1/storage
-      timeout: 5000
+      networkTimeout: 5000
 ```
 
 При подключенной зависимости без указания настроек в `application.yml` и запуске приложения - оно выдаст ошибку, что не был указан URL и как это исправить

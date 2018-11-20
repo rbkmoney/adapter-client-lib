@@ -25,6 +25,8 @@
 
 ##### Wrapper Damsel
 
+Версия не обновляется с остальными модулями
+
 1. [wrapper-damsel](wrapper-damsel/README.md)
 
 

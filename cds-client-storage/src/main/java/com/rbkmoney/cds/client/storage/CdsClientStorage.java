@@ -12,41 +12,19 @@ import com.rbkmoney.damsel.proxy_provider.PaymentContext;
 import com.rbkmoney.damsel.proxy_provider.RecurrentTokenContext;
 import com.rbkmoney.damsel.withdrawals.domain.Destination;
 import com.rbkmoney.damsel.withdrawals.provider_adapter.Withdrawal;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.thrift.TException;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.Optional;
 
 @Component
+@Slf4j
+@RequiredArgsConstructor
 public class CdsClientStorage {
 
-    private Logger log = LoggerFactory.getLogger(this.getClass());
-
     private final StorageSrv.Iface storageSrv;
-
-
-    // ------------------------------------------------------------------------
-    // Constructors
-    // ------------------------------------------------------------------------
-
-    /**
-     * Constructs a new {@link CdsClientStorage} instance with the given
-     * initial parameters to be constructed.
-     *
-     * @param storageSrv the field's storageSrv (see {@link #storageSrv}).
-     */
-    @Autowired
-    public CdsClientStorage(StorageSrv.Iface storageSrv) {
-        this.storageSrv = storageSrv;
-    }
-
-
-    // ------------------------------------------------------------------------
-    // Public methods
-    // ------------------------------------------------------------------------
 
     public CardData getCardData(final String token) {
         log.info("getCardData: token: {}", token);
@@ -64,7 +42,7 @@ public class CdsClientStorage {
         String token;
         if (invoicePayment.getPaymentResource().isSetDisposablePaymentResource()) {
             token = invoicePayment.getPaymentResource().getDisposablePaymentResource().getPaymentTool().getBankCard().getToken();
-        } else  {
+        } else {
             token = invoicePayment.getPaymentResource().getRecurrentPaymentResource().getPaymentTool().getBankCard().getToken();
         }
         return getCardData(token);
@@ -126,7 +104,7 @@ public class CdsClientStorage {
             log.info("Storage getSessionData: finish");
             return sessionData;
         } catch (TException ex) {
-            throw new CdsStorageException("Can't get session data by session Id "+ sessionId, ex);
+            throw new CdsStorageException("Can't get session data by session Id " + sessionId, ex);
         }
     }
 

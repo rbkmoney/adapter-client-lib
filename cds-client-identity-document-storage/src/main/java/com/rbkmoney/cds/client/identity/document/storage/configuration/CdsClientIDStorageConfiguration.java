@@ -16,7 +16,7 @@ public class CdsClientIDStorageConfiguration {
     public IdentityDocumentStorageSrv.Iface identityDocumentStorageSrv(CdsClientIDStorageProperties properties) throws IOException {
         return new THSpawnClientBuilder()
                 .withAddress(properties.getUrl().getURI())
-                .withNetworkTimeout(properties.getTimeout())
+                .withNetworkTimeout(properties.getNetworkTimeout())
                 .build(IdentityDocumentStorageSrv.Iface.class);
     }
 
