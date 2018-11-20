@@ -11,7 +11,6 @@ import org.mockito.Mockito;
 import org.mockito.runners.MockitoJUnitRunner;
 
 import static org.junit.Assert.assertEquals;
-import static org.mockito.Matchers.eq;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.MockitoAnnotations.initMocks;
@@ -32,15 +31,6 @@ public class CdsClientIDStorageTest {
     public void setUp() throws Exception {
         initMocks(CdsClientIDStorageTest.class);
         client = new CdsClientIDStorage(identityDocumentStorageSrv);
-    }
-
-    @Test
-    public void put() throws TException {
-        String response = "response";
-        Mockito.when(identityDocumentStorageSrv.put(identityDocument)).thenReturn(response);
-
-        assertEquals(response, client.put(identityDocument));
-        verify(identityDocumentStorageSrv, times(1)).put(eq(identityDocument));
     }
 
     @Test
