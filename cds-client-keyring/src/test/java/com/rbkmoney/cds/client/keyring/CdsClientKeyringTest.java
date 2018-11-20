@@ -43,7 +43,7 @@ public class CdsClientKeyringTest {
     public void unlock() throws TException {
         ByteBuffer keyShare = ByteBuffer.wrap("keyShare".getBytes());
 
-        Mockito.when(client.unlock(keyShare)).thenReturn(unlockStatus);
+        Mockito.when(keyringSrv.unlock(keyShare)).thenReturn(unlockStatus);
 
         assertEquals(unlockStatus, client.unlock(keyShare));
         verify(keyringSrv, times(1)).unlock(keyShare);
@@ -53,7 +53,7 @@ public class CdsClientKeyringTest {
     public void init() throws TException {
         short treshold = 1;
         short numShares = 2;
-        Mockito.when(client.init(treshold, numShares)).thenReturn(list);
+        Mockito.when(keyringSrv.init(treshold, numShares)).thenReturn(list);
 
         assertEquals(list, client.init(treshold, numShares));
         verify(keyringSrv, times(1)).init(treshold, numShares);

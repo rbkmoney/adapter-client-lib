@@ -3,7 +3,6 @@ package com.rbkmoney.cds.client.storage;
 import com.rbkmoney.damsel.cds.CardData;
 import com.rbkmoney.damsel.cds.SessionData;
 import com.rbkmoney.damsel.cds.StorageSrv;
-import com.rbkmoney.damsel.proxy_provider.PaymentContext;
 import org.apache.thrift.TException;
 import org.junit.Before;
 import org.junit.Test;
@@ -25,10 +24,6 @@ public class CdsClientStorageTest {
 
     private CdsClientStorage client;
 
-
-    @Mock
-    private PaymentContext paymentContext;
-
     @Mock
     private CardData cardData;
 
@@ -47,7 +42,7 @@ public class CdsClientStorageTest {
 
     @Test
     public void getCardData() throws TException {
-        Mockito.when(client.getCardData(token)).thenReturn(cardData);
+        Mockito.when(storageSrv.getCardData(token)).thenReturn(cardData);
 
         assertEquals(cardData, client.getCardData(token));
         verify(storageSrv, times(1)).getCardData(eq(token));
@@ -55,9 +50,9 @@ public class CdsClientStorageTest {
 
     @Test
     public void getSessionData() throws TException {
-        Mockito.when(client.getSessionData(paymentContext)).thenReturn(sessionData);
+        Mockito.when(storageSrv.getSessionData(token)).thenReturn(sessionData);
 
-        assertEquals(cardData, client.getCardData(token));
+        assertEquals(cardData, client.getSessionDataBySessionId(token));
         verify(storageSrv, times(1)).getSessionData(eq(token));
     }
 

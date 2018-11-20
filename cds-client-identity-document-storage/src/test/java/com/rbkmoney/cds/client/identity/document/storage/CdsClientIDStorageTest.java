@@ -37,7 +37,7 @@ public class CdsClientIDStorageTest {
     @Test
     public void put() throws TException {
         String response = "response";
-        Mockito.when(client.put(identityDocument)).thenReturn(response);
+        Mockito.when(identityDocumentStorageSrv.put(identityDocument)).thenReturn(response);
 
         assertEquals(response, client.put(identityDocument));
         verify(identityDocumentStorageSrv, times(1)).put(eq(identityDocument));
@@ -46,7 +46,7 @@ public class CdsClientIDStorageTest {
     @Test
     public void get() throws TException {
         String token = "token";
-        Mockito.when(client.get(token)).thenReturn(identityDocument);
+        Mockito.when(identityDocumentStorageSrv.get(token)).thenReturn(identityDocument);
 
         assertEquals(identityDocument, client.get(token));
         verify(identityDocumentStorageSrv, times(1)).get(token);
