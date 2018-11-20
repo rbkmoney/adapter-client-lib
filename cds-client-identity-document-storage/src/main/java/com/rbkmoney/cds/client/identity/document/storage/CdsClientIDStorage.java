@@ -16,11 +16,8 @@ public class CdsClientIDStorage {
     private final IdentityDocumentStorageSrv.Iface cdsIDStorageApi;
 
     public String put(IdentityDocument identity_document) {
-        log.info("putIdentityDocument: identity_document: {}", identity_document);
         try {
-            String response = cdsIDStorageApi.put(identity_document);
-            log.info("putIdentityDocument: response, identity_document: {}", identity_document);
-            return response;
+            return cdsIDStorageApi.put(identity_document);
         } catch (TException ex) {
             throw new CdsIDStorageException(String.format("Exception in putIdentityDocument with identity_document: %s", identity_document), ex);
         }
@@ -29,9 +26,7 @@ public class CdsClientIDStorage {
     public IdentityDocument get(String token) {
         log.info("getIdentityDocument: token: {}", token);
         try {
-            IdentityDocument identityDocument = cdsIDStorageApi.get(token);
-            log.info("getIdentityDocument: response, token: {}", token);
-            return identityDocument;
+            return cdsIDStorageApi.get(token);
         } catch (TException ex) {
             throw new CdsIDStorageException(String.format("Exception in getIdentityDocument with token: %s", token), ex);
         }
