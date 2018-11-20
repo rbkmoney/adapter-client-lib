@@ -2,7 +2,6 @@ package com.rbkmoney.cds.client.storage;
 
 import com.rbkmoney.cds.client.storage.exception.CdsStorageException;
 import com.rbkmoney.damsel.cds.CardData;
-import com.rbkmoney.damsel.cds.PutCardDataResult;
 import com.rbkmoney.damsel.cds.SessionData;
 import com.rbkmoney.damsel.cds.StorageSrv;
 import com.rbkmoney.damsel.domain.BankCard;
@@ -106,17 +105,6 @@ public class CdsClientStorage {
             return sessionData;
         } catch (TException ex) {
             throw new CdsStorageException("Can't get session data by session Id " + sessionId, ex);
-        }
-    }
-
-    public PutCardDataResult putCardData(CardData cardData, SessionData sessionData) throws CdsStorageException {
-        log.info("Storage putCardData - start");
-        try {
-            PutCardDataResult result = storageSrv.putCardData(cardData, sessionData);
-            log.info("Storage putCardData: finish");
-            return result;
-        } catch (TException ex) {
-            throw new CdsStorageException("Failed to put card data into cds storage", ex);
         }
     }
 

@@ -15,14 +15,6 @@ public class CdsClientIDStorage {
 
     private final IdentityDocumentStorageSrv.Iface cdsIDStorageApi;
 
-    public String put(IdentityDocument identityDocument) {
-        try {
-            return cdsIDStorageApi.put(identityDocument);
-        } catch (TException ex) {
-            throw new CdsIDStorageException("Failed to put identity document into cds storage", ex);
-        }
-    }
-
     public IdentityDocument get(String token) {
         log.info("getIdentityDocument: token: {}", token);
         try {
