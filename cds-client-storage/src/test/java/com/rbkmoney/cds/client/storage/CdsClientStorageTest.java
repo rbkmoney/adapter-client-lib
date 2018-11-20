@@ -1,8 +1,10 @@
 package com.rbkmoney.cds.client.storage;
 
 import com.rbkmoney.damsel.cds.CardData;
+import com.rbkmoney.damsel.cds.PutCardDataResult;
 import com.rbkmoney.damsel.cds.SessionData;
 import com.rbkmoney.damsel.cds.StorageSrv;
+import com.rbkmoney.damsel.proxy_provider.PaymentContext;
 import org.apache.thrift.TException;
 import org.junit.Before;
 import org.junit.Test;
@@ -23,6 +25,12 @@ public class CdsClientStorageTest {
     private String token = "some_token";
 
     private CdsClientStorage client;
+
+    @Mock
+    private PutCardDataResult result;
+
+    @Mock
+    private PaymentContext paymentContext;
 
     @Mock
     private CardData cardData;
@@ -52,17 +60,15 @@ public class CdsClientStorageTest {
     public void getSessionData() throws TException {
         Mockito.when(storageSrv.getSessionData(token)).thenReturn(sessionData);
 
-        assertEquals(cardData, client.getSessionDataBySessionId(token));
+        assertEquals(sessionData, client.getSessionDataBySessionId(token));
         verify(storageSrv, times(1)).getSessionData(eq(token));
     }
 
     @Test
-    public void getSessionCardData() throws TException {
-        verify(storageSrv, times(1)).getSessionCardData(eq(token), eq(token));
-    }
-
-    @Test
     public void putCardData() throws TException {
+        Mockito.when(storageSrv.putCardData(cardData, sessionData)).thenReturn(result);
+
+        assertEquals(result, client.putCardData(cardData, sessionData));
         verify(storageSrv, times(1)).putCardData(eq(cardData), eq(sessionData));
     }
 
