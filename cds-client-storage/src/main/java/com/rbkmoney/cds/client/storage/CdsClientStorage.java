@@ -116,7 +116,7 @@ public class CdsClientStorage {
             log.info("Storage putCardData: finish");
             return result;
         } catch (TException ex) {
-            throw new CdsStorageException("Can't put card data", ex);
+            throw new CdsStorageException("Failed to put card data into cds storage", ex);
         }
     }
 

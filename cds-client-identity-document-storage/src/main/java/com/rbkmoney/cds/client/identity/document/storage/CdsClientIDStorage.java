@@ -19,7 +19,7 @@ public class CdsClientIDStorage {
         try {
             return cdsIDStorageApi.put(identityDocument);
         } catch (TException ex) {
-            throw new CdsIDStorageException("Exception in putIdentityDocument", ex);
+            throw new CdsIDStorageException("Failed to put identity document into cds storage", ex);
         }
     }
 
@@ -28,7 +28,7 @@ public class CdsClientIDStorage {
         try {
             return cdsIDStorageApi.get(token);
         } catch (TException ex) {
-            throw new CdsIDStorageException(String.format("Exception in getIdentityDocument with token: %s", token), ex);
+            throw new CdsIDStorageException(String.format("Failed to get identity document into cds storage with token: %s", token), ex);
         }
     }
 

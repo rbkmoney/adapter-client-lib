@@ -25,7 +25,7 @@ public class CdsClientKeyring {
             log.info("Keyring: unlock finish");
             return unlockStatus;
         } catch (TException ex) {
-            throw new CdsKeyringException("Keyring. Exception - unlock", ex);
+            throw new CdsKeyringException("Failed to unlock into cds keyring", ex);
         }
     }
 
@@ -36,7 +36,7 @@ public class CdsClientKeyring {
             log.info("Keyring: init finish");
             return list;
         } catch (TException ex) {
-            throw new CdsKeyringException("Keyring. Exception - init", ex);
+            throw new CdsKeyringException("Failed to init into cds keyring", ex);
         }
     }
 
@@ -46,7 +46,7 @@ public class CdsClientKeyring {
             keyringSrv.lock();
             log.info("Keyring: lock finish");
         } catch (TException ex) {
-            throw new CdsKeyringException("Keyring. Exception - lock", ex);
+            throw new CdsKeyringException("Failed to lock into cds keyring", ex);
         }
     }
 
@@ -56,7 +56,7 @@ public class CdsClientKeyring {
             keyringSrv.rotate();
             log.info("Keyring: rotate finish");
         } catch (TException ex) {
-            throw new CdsKeyringException("Keyring. Exception - rotate", ex);
+            throw new CdsKeyringException("Failed to rotate into cds keyring", ex);
         }
     }
 
