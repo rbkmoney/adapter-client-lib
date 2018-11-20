@@ -13,7 +13,6 @@
 
 ##### CDS
 
-1. [cds-client-keyring](cds-client-keyring/README.md)
 1. [cds-client-storage](cds-client-storage/README.md)
 1. [cds-client-identity-document-storage](cds-client-identity-document-storage/README.md)
 
