@@ -1,25 +1,26 @@
 package com.rbkmoney.cds.client.keyring;
 
+import com.rbkmoney.damsel.cds.KeyringSrv;
 import com.rbkmoney.damsel.cds.UnlockStatus;
+import org.apache.thrift.TException;
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.Mockito;
-import org.mockito.MockitoAnnotations;
+import org.mockito.runners.MockitoJUnitRunner;
 
 import java.nio.ByteBuffer;
 import java.util.List;
 
 import static org.junit.Assert.assertEquals;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
+import static org.mockito.MockitoAnnotations.initMocks;
 
+@RunWith(MockitoJUnitRunner.class)
 public class CdsClientKeyringTest {
 
-    private ByteBuffer keyShare = ByteBuffer.wrap("keyShare".getBytes());
-    private short treshold = Short.valueOf("treshold");
-    private short numShares = Short.valueOf("num_shares");
-
-
-    @Mock
     private CdsClientKeyring client;
 
     @Mock
@@ -28,25 +29,34 @@ public class CdsClientKeyringTest {
     @Mock
     private List<ByteBuffer> list;
 
+    @Mock
+    private KeyringSrv.Iface keyringSrv;
+
+
     @Before
     public void setUp() throws Exception {
-        // this must be called for the @Mock annotations above to be processed
-        // and for the mock service to be injected into the controller under test.
-        MockitoAnnotations.initMocks(this);
+        initMocks(CdsClientKeyringTest.class);
+        client = new CdsClientKeyring(keyringSrv);
     }
 
     @Test
-    public void unlock() {
+    public void unlock() throws TException {
+        ByteBuffer keyShare = ByteBuffer.wrap("keyShare".getBytes());
+
         Mockito.when(client.unlock(keyShare)).thenReturn(unlockStatus);
 
         assertEquals(unlockStatus, client.unlock(keyShare));
+        verify(keyringSrv, times(1)).unlock(keyShare);
     }
 
     @Test
-    public void init() {
+    public void init() throws TException {
+        short treshold = 1;
+        short numShares = 2;
         Mockito.when(client.init(treshold, numShares)).thenReturn(list);
 
         assertEquals(list, client.init(treshold, numShares));
+        verify(keyringSrv, times(1)).init(treshold, numShares);
     }
 
 }

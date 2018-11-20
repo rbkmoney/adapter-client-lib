@@ -9,6 +9,7 @@ import com.rbkmoney.damsel.domain.BankCard;
 import com.rbkmoney.damsel.domain.DisposablePaymentResource;
 import com.rbkmoney.damsel.proxy_provider.InvoicePayment;
 import com.rbkmoney.damsel.proxy_provider.PaymentContext;
+import com.rbkmoney.damsel.proxy_provider.PaymentResource;
 import com.rbkmoney.damsel.proxy_provider.RecurrentTokenContext;
 import com.rbkmoney.damsel.withdrawals.domain.Destination;
 import com.rbkmoney.damsel.withdrawals.provider_adapter.Withdrawal;
@@ -38,12 +39,12 @@ public class CdsClientStorage {
     }
 
     public CardData getCardData(final PaymentContext context) {
-        InvoicePayment invoicePayment = context.getPaymentInfo().getPayment();
+        PaymentResource paymentResource = context.getPaymentInfo().getPayment().getPaymentResource();
         String token;
-        if (invoicePayment.getPaymentResource().isSetDisposablePaymentResource()) {
-            token = invoicePayment.getPaymentResource().getDisposablePaymentResource().getPaymentTool().getBankCard().getToken();
+        if (paymentResource.isSetDisposablePaymentResource()) {
+            token = paymentResource.getDisposablePaymentResource().getPaymentTool().getBankCard().getToken();
         } else {
-            token = invoicePayment.getPaymentResource().getRecurrentPaymentResource().getPaymentTool().getBankCard().getToken();
+            token = paymentResource.getRecurrentPaymentResource().getPaymentTool().getBankCard().getToken();
         }
         return getCardData(token);
     }
