@@ -27,11 +27,9 @@ public class CdsClientStorage {
     private final StorageSrv.Iface storageSrv;
 
     public CardData getCardData(final String token) {
-        log.info("getCardData: token: {}", token);
+        log.info("Get card data by token: {}", token);
         try {
-            CardData cardData = storageSrv.getCardData(token);
-            log.info("getCardData: response, token: {}", token);
-            return cardData;
+            return storageSrv.getCardData(token);
         } catch (TException ex) {
             throw new CdsStorageException(String.format("Can't get card data with token: %s", token), ex);
         }
@@ -41,34 +39,33 @@ public class CdsClientStorage {
         PaymentResource paymentResource = context.getPaymentInfo().getPayment().getPaymentResource();
         String token;
         if (paymentResource.isSetDisposablePaymentResource()) {
-            token = paymentResource.getDisposablePaymentResource().getPaymentTool().getBankCard().getToken();
+            token = paymentResource.getDisposablePaymentResource()
+                    .getPaymentTool().getBankCard().getToken();
         } else {
-            token = paymentResource.getRecurrentPaymentResource().getPaymentTool().getBankCard().getToken();
+            token = paymentResource.getRecurrentPaymentResource()
+                    .getPaymentTool().getBankCard().getToken();
         }
         return getCardData(token);
     }
 
     public CardData getCardData(final Withdrawal withdrawal) {
-        String withdrawalId = withdrawal.getId();
-
         Optional<String> token = Optional.ofNullable(withdrawal.getDestination())
                 .map(Destination::getBankCard)
                 .map(BankCard::getToken);
 
         if (!token.isPresent()) {
-            throw new CdsStorageException("Token must be set for card data, withdrawalId " + withdrawalId);
+            throw new CdsStorageException("Token must be set for card data, withdrawalId " + withdrawal.getId());
         }
 
         return getCardData(token.get());
     }
 
     public SessionData getSessionData(final PaymentContext context) {
-        String invoiceId = context.getPaymentInfo().getInvoice().getId();
-
         InvoicePayment invoicePayment = context.getPaymentInfo().getPayment();
         DisposablePaymentResource disposablePaymentResource = invoicePayment.getPaymentResource().getDisposablePaymentResource();
 
         if (!disposablePaymentResource.isSetPaymentSessionId()) {
+            String invoiceId = context.getPaymentInfo().getInvoice().getId();
             throw new CdsStorageException("Session must be set for session data, invoiceId " + invoiceId);
         }
 
@@ -76,33 +73,27 @@ public class CdsClientStorage {
     }
 
     public CardData getCardData(final RecurrentTokenContext context) {
-        String recurrentId = context.getTokenInfo().getPaymentTool().getId();
         DisposablePaymentResource disposablePaymentResource = context.getTokenInfo().getPaymentTool().getPaymentResource();
-
         if (!disposablePaymentResource.isSetPaymentSessionId()) {
+            String recurrentId = context.getTokenInfo().getPaymentTool().getId();
             throw new CdsStorageException("Session Id must be set, recurrentId " + recurrentId);
         }
-
         String token = disposablePaymentResource.getPaymentTool().getBankCard().getToken();
         return getCardData(token);
     }
 
     public SessionData getSessionData(final RecurrentTokenContext context) {
-        String recurrentId = context.getTokenInfo().getPaymentTool().getId();
         DisposablePaymentResource disposablePaymentResource = context.getTokenInfo().getPaymentTool().getPaymentResource();
-
         if (!disposablePaymentResource.isSetPaymentSessionId()) {
+            String recurrentId = context.getTokenInfo().getPaymentTool().getId();
             throw new CdsStorageException("Session Id must be set, recurrentId " + recurrentId);
         }
-
         return getSessionDataBySessionId(disposablePaymentResource.getPaymentSessionId());
     }
 
     public SessionData getSessionDataBySessionId(String sessionId) {
         try {
-            SessionData sessionData = storageSrv.getSessionData(sessionId);
-            log.info("Storage getSessionData: finish");
-            return sessionData;
+            return storageSrv.getSessionData(sessionId);
         } catch (TException ex) {
             throw new CdsStorageException("Can't get session data by session Id " + sessionId, ex);
         }

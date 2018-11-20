@@ -16,11 +16,11 @@ public class CdsClientIDStorage {
     private final IdentityDocumentStorageSrv.Iface cdsIDStorageApi;
 
     public IdentityDocument get(String token) {
-        log.info("getIdentityDocument: token: {}", token);
+        log.info("Get Identity Document by token: {}", token);
         try {
             return cdsIDStorageApi.get(token);
         } catch (TException ex) {
-            throw new CdsIDStorageException(String.format("Failed to get identity document into cds storage with token: %s", token), ex);
+            throw new CdsIDStorageException(String.format("Failed to get identity document from cds storage with token: %s", token), ex);
         }
     }
 
