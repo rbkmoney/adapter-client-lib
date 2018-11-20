@@ -64,12 +64,4 @@ public class CdsClientStorageTest {
         verify(storageSrv, times(1)).getSessionData(eq(token));
     }
 
-    @Test
-    public void putCardData() throws TException {
-        Mockito.when(storageSrv.putCardData(cardData, sessionData)).thenReturn(result);
-
-        assertEquals(result, client.putCardData(cardData, sessionData));
-        verify(storageSrv, times(1)).putCardData(eq(cardData), eq(sessionData));
-    }
-
 }
