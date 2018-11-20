@@ -15,11 +15,11 @@ public class CdsClientIDStorage {
 
     private final IdentityDocumentStorageSrv.Iface cdsIDStorageApi;
 
-    public String put(IdentityDocument identity_document) {
+    public String put(IdentityDocument identityDocument) {
         try {
-            return cdsIDStorageApi.put(identity_document);
+            return cdsIDStorageApi.put(identityDocument);
         } catch (TException ex) {
-            throw new CdsIDStorageException(String.format("Exception in putIdentityDocument with identity_document: %s", identity_document), ex);
+            throw new CdsIDStorageException("Exception in putIdentityDocument", ex);
         }
     }
 
