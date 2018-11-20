@@ -1,3 +1,0 @@
-org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
-com.rbkmoney.cds.client.keyring.configuration.CdsClientKeyringConfiguration,\
-com.rbkmoney.cds.client.keyring.CdsClientKeyring
