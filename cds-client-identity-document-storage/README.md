@@ -34,7 +34,7 @@ CDS Client Idendtity Document Storage
 cds:
   client:
     identity-document-storage:
-      url: http://127.0.0.1:8022/v1/keyring
+      url: http://127.0.0.1:8022/v1/identity_document_storage
       networkTimeout: 5000
 ```
 

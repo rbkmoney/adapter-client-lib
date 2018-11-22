@@ -6,9 +6,9 @@ import com.rbkmoney.damsel.cds.SessionData;
 import com.rbkmoney.damsel.cds.StorageSrv;
 import com.rbkmoney.damsel.domain.BankCard;
 import com.rbkmoney.damsel.domain.DisposablePaymentResource;
-import com.rbkmoney.damsel.proxy_provider.InvoicePayment;
 import com.rbkmoney.damsel.proxy_provider.PaymentContext;
 import com.rbkmoney.damsel.proxy_provider.PaymentResource;
+import com.rbkmoney.damsel.proxy_provider.RecurrentPaymentResource;
 import com.rbkmoney.damsel.proxy_provider.RecurrentTokenContext;
 import com.rbkmoney.damsel.withdrawals.domain.Destination;
 import com.rbkmoney.damsel.withdrawals.provider_adapter.Withdrawal;
@@ -26,7 +26,7 @@ public class CdsClientStorage {
 
     private final StorageSrv.Iface storageSrv;
 
-    public CardData getCardData(final String token) {
+    public CardData getCardData(String token) {
         log.info("Get card data by token: {}", token);
         try {
             return storageSrv.getCardData(token);
@@ -35,20 +35,11 @@ public class CdsClientStorage {
         }
     }
 
-    public CardData getCardData(final PaymentContext context) {
-        PaymentResource paymentResource = context.getPaymentInfo().getPayment().getPaymentResource();
-        String token;
-        if (paymentResource.isSetDisposablePaymentResource()) {
-            token = paymentResource.getDisposablePaymentResource()
-                    .getPaymentTool().getBankCard().getToken();
-        } else {
-            token = paymentResource.getRecurrentPaymentResource()
-                    .getPaymentTool().getBankCard().getToken();
-        }
-        return getCardData(token);
+    public CardData getCardData(PaymentContext context) {
+        return getCardData(getBankCardToken(getPaymentResource(context)));
     }
 
-    public CardData getCardData(final Withdrawal withdrawal) {
+    public CardData getCardData(Withdrawal withdrawal) {
         Optional<String> token = Optional.ofNullable(withdrawal.getDestination())
                 .map(Destination::getBankCard)
                 .map(BankCard::getToken);
@@ -60,32 +51,29 @@ public class CdsClientStorage {
         return getCardData(token.get());
     }
 
-    public SessionData getSessionData(final PaymentContext context) {
-        InvoicePayment invoicePayment = context.getPaymentInfo().getPayment();
-        DisposablePaymentResource disposablePaymentResource = invoicePayment.getPaymentResource().getDisposablePaymentResource();
-
+    public SessionData getSessionData(PaymentContext context) {
+        DisposablePaymentResource disposablePaymentResource = getDisposablePaymentResource(context);
         if (!disposablePaymentResource.isSetPaymentSessionId()) {
-            String invoiceId = context.getPaymentInfo().getInvoice().getId();
+            String invoiceId = getInvoiceId(context);
             throw new CdsStorageException("Session must be set for session data, invoiceId " + invoiceId);
         }
-
         return getSessionDataBySessionId(disposablePaymentResource.getPaymentSessionId());
     }
 
-    public CardData getCardData(final RecurrentTokenContext context) {
-        DisposablePaymentResource disposablePaymentResource = context.getTokenInfo().getPaymentTool().getPaymentResource();
+    public CardData getCardData(RecurrentTokenContext context) {
+        DisposablePaymentResource disposablePaymentResource = getDisposablePaymentResource(context);
         if (!disposablePaymentResource.isSetPaymentSessionId()) {
-            String recurrentId = context.getTokenInfo().getPaymentTool().getId();
+            String recurrentId = getRecurrentId(context);
             throw new CdsStorageException("Session Id must be set, recurrentId " + recurrentId);
         }
         String token = disposablePaymentResource.getPaymentTool().getBankCard().getToken();
         return getCardData(token);
     }
 
-    public SessionData getSessionData(final RecurrentTokenContext context) {
-        DisposablePaymentResource disposablePaymentResource = context.getTokenInfo().getPaymentTool().getPaymentResource();
+    public SessionData getSessionData(RecurrentTokenContext context) {
+        DisposablePaymentResource disposablePaymentResource = getDisposablePaymentResource(context);
         if (!disposablePaymentResource.isSetPaymentSessionId()) {
-            String recurrentId = context.getTokenInfo().getPaymentTool().getId();
+            String recurrentId = getRecurrentId(context);
             throw new CdsStorageException("Session Id must be set, recurrentId " + recurrentId);
         }
         return getSessionDataBySessionId(disposablePaymentResource.getPaymentSessionId());
@@ -99,4 +87,38 @@ public class CdsClientStorage {
         }
     }
 
+    private static DisposablePaymentResource getDisposablePaymentResource(RecurrentTokenContext context) {
+        return context.getTokenInfo().getPaymentTool().getPaymentResource();
+    }
+
+    private static DisposablePaymentResource getDisposablePaymentResource(PaymentContext context) {
+        return context.getPaymentInfo().getPayment().getPaymentResource().getDisposablePaymentResource();
+    }
+
+    private static PaymentResource getPaymentResource(PaymentContext context) {
+        return context.getPaymentInfo().getPayment().getPaymentResource();
+    }
+
+    private static String getRecurrentId(RecurrentTokenContext context) {
+        return context.getTokenInfo().getPaymentTool().getId();
+    }
+
+    private static String getInvoiceId(PaymentContext context) {
+        return context.getPaymentInfo().getInvoice().getId();
+    }
+
+    private static String getBankCardToken(PaymentResource paymentResource) {
+        if (paymentResource.isSetDisposablePaymentResource()) {
+            return getBankCardToken(paymentResource.getDisposablePaymentResource());
+        }
+        return getBankCardToken(paymentResource.getRecurrentPaymentResource());
+    }
+
+    private static String getBankCardToken(RecurrentPaymentResource paymentResource) {
+        return paymentResource.getPaymentTool().getBankCard().getToken();
+    }
+
+    private static String getBankCardToken(DisposablePaymentResource paymentResource) {
+        return paymentResource.getPaymentTool().getBankCard().getToken();
+    }
 }
