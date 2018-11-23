@@ -7,8 +7,6 @@ import com.rbkmoney.damsel.cds.StorageSrv;
 import com.rbkmoney.damsel.domain.BankCard;
 import com.rbkmoney.damsel.domain.DisposablePaymentResource;
 import com.rbkmoney.damsel.proxy_provider.PaymentContext;
-import com.rbkmoney.damsel.proxy_provider.PaymentResource;
-import com.rbkmoney.damsel.proxy_provider.RecurrentPaymentResource;
 import com.rbkmoney.damsel.proxy_provider.RecurrentTokenContext;
 import com.rbkmoney.damsel.withdrawals.domain.Destination;
 import com.rbkmoney.damsel.withdrawals.provider_adapter.Withdrawal;
@@ -18,6 +16,8 @@ import org.apache.thrift.TException;
 import org.springframework.stereotype.Component;
 
 import java.util.Optional;
+
+import static com.rbkmoney.java.damsel.utils.extractors.ProxyProviderPackageExtractors.*;
 
 @Component
 @Slf4j
@@ -36,45 +36,38 @@ public class CdsClientStorage {
     }
 
     public CardData getCardData(PaymentContext context) {
-        return getCardData(getBankCardToken(getPaymentResource(context)));
+        return getCardData(extractBankCardToken(extractPaymentResource(context)));
     }
 
     public CardData getCardData(Withdrawal withdrawal) {
-        Optional<String> token = Optional.ofNullable(withdrawal.getDestination())
+        String token = Optional.ofNullable(withdrawal.getDestination())
                 .map(Destination::getBankCard)
-                .map(BankCard::getToken);
+                .map(BankCard::getToken)
+                .orElseThrow(() -> new CdsStorageException("Token must be set for card data, withdrawalId " + withdrawal.getId()));
 
-        if (!token.isPresent()) {
-            throw new CdsStorageException("Token must be set for card data, withdrawalId " + withdrawal.getId());
-        }
-
-        return getCardData(token.get());
+        return getCardData(token);
     }
 
     public SessionData getSessionData(PaymentContext context) {
-        DisposablePaymentResource disposablePaymentResource = getDisposablePaymentResource(context);
+        DisposablePaymentResource disposablePaymentResource = extractDisposablePaymentResource(context);
         if (!disposablePaymentResource.isSetPaymentSessionId()) {
-            String invoiceId = getInvoiceId(context);
-            throw new CdsStorageException("Session must be set for session data, invoiceId " + invoiceId);
+            throw new CdsStorageException("Session must be set for session data, invoiceId " + extractInvoiceId(context));
         }
         return getSessionDataBySessionId(disposablePaymentResource.getPaymentSessionId());
     }
 
     public CardData getCardData(RecurrentTokenContext context) {
-        DisposablePaymentResource disposablePaymentResource = getDisposablePaymentResource(context);
+        DisposablePaymentResource disposablePaymentResource = extractDisposablePaymentResource(context);
         if (!disposablePaymentResource.isSetPaymentSessionId()) {
-            String recurrentId = getRecurrentId(context);
-            throw new CdsStorageException("Session Id must be set, recurrentId " + recurrentId);
+            throw new CdsStorageException("Session Id must be set, recurrentId " + extractRecurrentId(context));
         }
-        String token = disposablePaymentResource.getPaymentTool().getBankCard().getToken();
-        return getCardData(token);
+        return getCardData(extractBankCardToken(disposablePaymentResource));
     }
 
     public SessionData getSessionData(RecurrentTokenContext context) {
-        DisposablePaymentResource disposablePaymentResource = getDisposablePaymentResource(context);
+        DisposablePaymentResource disposablePaymentResource = extractDisposablePaymentResource(context);
         if (!disposablePaymentResource.isSetPaymentSessionId()) {
-            String recurrentId = getRecurrentId(context);
-            throw new CdsStorageException("Session Id must be set, recurrentId " + recurrentId);
+            throw new CdsStorageException("Session Id must be set, recurrentId " + extractRecurrentId(context));
         }
         return getSessionDataBySessionId(disposablePaymentResource.getPaymentSessionId());
     }
@@ -85,40 +78,5 @@ public class CdsClientStorage {
         } catch (TException ex) {
             throw new CdsStorageException("Can't get session data by session Id " + sessionId, ex);
         }
-    }
-
-    private static DisposablePaymentResource getDisposablePaymentResource(RecurrentTokenContext context) {
-        return context.getTokenInfo().getPaymentTool().getPaymentResource();
-    }
-
-    private static DisposablePaymentResource getDisposablePaymentResource(PaymentContext context) {
-        return context.getPaymentInfo().getPayment().getPaymentResource().getDisposablePaymentResource();
-    }
-
-    private static PaymentResource getPaymentResource(PaymentContext context) {
-        return context.getPaymentInfo().getPayment().getPaymentResource();
-    }
-
-    private static String getRecurrentId(RecurrentTokenContext context) {
-        return context.getTokenInfo().getPaymentTool().getId();
-    }
-
-    private static String getInvoiceId(PaymentContext context) {
-        return context.getPaymentInfo().getInvoice().getId();
-    }
-
-    private static String getBankCardToken(PaymentResource paymentResource) {
-        if (paymentResource.isSetDisposablePaymentResource()) {
-            return getBankCardToken(paymentResource.getDisposablePaymentResource());
-        }
-        return getBankCardToken(paymentResource.getRecurrentPaymentResource());
-    }
-
-    private static String getBankCardToken(RecurrentPaymentResource paymentResource) {
-        return paymentResource.getPaymentTool().getBankCard().getToken();
-    }
-
-    private static String getBankCardToken(DisposablePaymentResource paymentResource) {
-        return paymentResource.getPaymentTool().getBankCard().getToken();
     }
 }

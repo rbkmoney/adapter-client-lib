@@ -29,6 +29,10 @@
             <artifactId>spring-boot-configuration-processor</artifactId>
             <optional>true</optional>
         </dependency>
+        <dependency>
+            <groupId>javax.validation</groupId>
+            <artifactId>validation-api</artifactId>
+        </dependency>
         <!--RBK libs-->
         <dependency>
             <groupId>com.rbkmoney.woody</groupId>
@@ -41,8 +45,9 @@
             <scope>provided</scope>
         </dependency>
         <dependency>
-            <groupId>javax.validation</groupId>
-            <artifactId>validation-api</artifactId>
+            <groupId>com.rbkmoney</groupId>
+            <artifactId>damsel-utils</artifactId>
+            <version>1.268-45c8524-SNAPSHOT</version>
         </dependency>
         <!--Test libs-->
         <dependency>

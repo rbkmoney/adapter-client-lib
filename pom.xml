@@ -29,7 +29,7 @@
         <module>cds-client-storage</module>
         <module>cds-client-identity-document-storage</module>
         <module>hellgate-adapter-client</module>
-        <module>wrapper-damsel</module>
+        <module>damsel-utils</module>
     </modules>
 
     <build>

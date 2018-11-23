@@ -1,6 +1,6 @@
-Damsel
+Damsel Utils
 
-Обертка для моделей Damsel
+Вспомогательные методы для более удобной работы с Damsel
 
 ### Настройки
 
@@ -9,8 +9,8 @@ Damsel
 ```
 <dependency>
     <groupId>com.rbkmoney</groupId>
-    <artifactId>wrapper-damsel</artifactId>
-    <version>${wrapper-damsel.version}</version>
+    <artifactId>damsel-utils</artifactId>
+    <version>${damsel-utils.version}</version>
 </dependency>
 ```
 
