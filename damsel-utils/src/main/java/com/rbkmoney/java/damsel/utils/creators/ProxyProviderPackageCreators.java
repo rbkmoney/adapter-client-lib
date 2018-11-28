@@ -12,11 +12,12 @@ import com.rbkmoney.damsel.user_interaction.BrowserPostRequest;
 import com.rbkmoney.damsel.user_interaction.UserInteraction;
 
 import java.nio.ByteBuffer;
+import java.time.Instant;
 import java.util.Map;
 
 import static com.rbkmoney.java.damsel.utils.Constants.DEFAULT_ERROR_CODE;
-import static com.rbkmoney.java.damsel.utils.creators.DomainPackageCreators.createFailure;
 import static com.rbkmoney.java.damsel.utils.creators.BasePackageCreators.createTimerTimeout;
+import static com.rbkmoney.java.damsel.utils.creators.DomainPackageCreators.createFailure;
 
 public class ProxyProviderPackageCreators {
 
@@ -78,7 +79,7 @@ public class ProxyProviderPackageCreators {
     }
 
     public static RecurrentPaymentTool createRecurrentPaymentTool(String id, DisposablePaymentResource disposablePaymentResource, com.rbkmoney.damsel.proxy_provider.Cash cash) {
-        return new RecurrentPaymentTool().setPaymentResource(disposablePaymentResource).setMinimalPaymentCost(cash).setId(id);
+        return new RecurrentPaymentTool().setPaymentResource(disposablePaymentResource).setMinimalPaymentCost(cash).setId(id).setCreatedAt(Instant.now().toString());
     }
 
 
@@ -142,6 +143,10 @@ public class ProxyProviderPackageCreators {
 
     public static InvoicePayment createInvoicePaymentWithTrX(String invoicePaymentId, String created_at, PaymentResource paymentResource, com.rbkmoney.damsel.proxy_provider.Cash cost, TransactionInfo transactionInfo) {
         return new InvoicePayment().setId(invoicePaymentId).setCreatedAt(created_at).setPaymentResource(paymentResource).setCost(cost).setTrx(transactionInfo);
+    }
+
+    public static Invoice createInvoice(String invoicePaymentId, String created_at, com.rbkmoney.damsel.proxy_provider.Cash cost) {
+        return new Invoice().setId(invoicePaymentId).setCreatedAt(created_at).setCost(cost);
     }
 
     public static Session createSession(byte[] state) {

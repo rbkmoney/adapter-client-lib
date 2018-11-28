@@ -100,7 +100,7 @@ public class DomainPackageCreators {
 
     // TransactionInfo
     public static TransactionInfo createTransactionInfo(String paymentId, Map<String, String> extra, String timestamp) {
-        return createTransactionInfo(paymentId, extra, timestamp);
+        return new TransactionInfo().setId(paymentId).setExtra(extra).setTimestamp(timestamp);
     }
 
     public static TransactionInfo createTransactionInfo(String paymentId, Map<String, String> extra) {

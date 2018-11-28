@@ -1,5 +1,6 @@
 package com.rbkmoney.java.damsel.utils.extractors;
 
+import com.rbkmoney.damsel.domain.ContactInfo;
 import com.rbkmoney.damsel.domain.DisposablePaymentResource;
 import com.rbkmoney.damsel.proxy_provider.PaymentContext;
 import com.rbkmoney.damsel.proxy_provider.PaymentResource;
@@ -28,6 +29,10 @@ public class ProxyProviderPackageExtractors {
         return context.getPaymentInfo().getInvoice().getId();
     }
 
+    public static String extractRecurrentToken(PaymentContext context) {
+        return context.getPaymentInfo().getPayment().getPaymentResource().getRecurrentPaymentResource().getRecToken();
+    }
+
     public static String extractBankCardToken(PaymentResource paymentResource) {
         if (paymentResource.isSetDisposablePaymentResource()) {
             return extractBankCardToken(paymentResource.getDisposablePaymentResource());
@@ -42,4 +47,9 @@ public class ProxyProviderPackageExtractors {
     public static String extractBankCardToken(DisposablePaymentResource paymentResource) {
         return paymentResource.getPaymentTool().getBankCard().getToken();
     }
+
+    public static ContactInfo extractPaymentInfo(PaymentContext context) {
+        return context.getPaymentInfo().getPayment().getContactInfo();
+    }
+
 }
