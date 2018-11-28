@@ -1,10 +1,8 @@
 package com.rbkmoney.cds.client.storage;
 
 import com.rbkmoney.damsel.cds.CardData;
-import com.rbkmoney.damsel.cds.PutCardDataResult;
 import com.rbkmoney.damsel.cds.SessionData;
 import com.rbkmoney.damsel.cds.StorageSrv;
-import com.rbkmoney.damsel.proxy_provider.PaymentContext;
 import org.apache.thrift.TException;
 import org.junit.Before;
 import org.junit.Test;
@@ -25,12 +23,6 @@ public class CdsClientStorageTest {
     private String token = "some_token";
 
     private CdsClientStorage client;
-
-    @Mock
-    private PutCardDataResult result;
-
-    @Mock
-    private PaymentContext paymentContext;
 
     @Mock
     private CardData cardData;

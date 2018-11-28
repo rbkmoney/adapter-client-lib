@@ -22,11 +22,11 @@
 1. [hellgate-adapter-client](hellgate-adapter-client/README.md)
 
 
-##### Wrapper Damsel
+##### Damsel Utils
 
 Версия не обновляется с остальными модулями
 
-1. [wrapper-damsel](wrapper-damsel/README.md)
+1. [damsel-utils](damsel-utils/README.md)
 
 
 ### Выпуск новой версии
