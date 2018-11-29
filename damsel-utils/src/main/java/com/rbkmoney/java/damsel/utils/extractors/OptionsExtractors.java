@@ -6,15 +6,20 @@ import static java.lang.Integer.parseInt;
 
 public class OptionsExtractors {
 
-    public static final String TIMER_TIMEOUT = "timer_timeout";
-    public static final String TIMER_ADD_TIME = "timer_add_time";
+    public static final String TIMER_REDIRECT_TIMEOUT = "redirect_timeout";
+    public static final String TIMER_MAX_TIME_POLLING = "max_time_polling";
+    public static final String TIMER_POLLING_DELAY = "polling_delay";
 
-    public static Integer extractAddTime(Map<String, String> options, int timerAddTime) {
-        return parseInt(options.getOrDefault(TIMER_ADD_TIME, String.valueOf(timerAddTime)));
+    public static Integer extractMaxTimePolling(Map<String, String> options, int maxTimePolling) {
+        return parseInt(options.getOrDefault(TIMER_MAX_TIME_POLLING, String.valueOf(maxTimePolling)));
     }
 
-    public static Integer extractTimeout(Map<String, String> options, int timerTimeout) {
-        return parseInt(options.getOrDefault(TIMER_TIMEOUT, String.valueOf(timerTimeout)));
+    public static Integer extractRedirectTimeout(Map<String, String> options, int redirectTimeout) {
+        return parseInt(options.getOrDefault(TIMER_REDIRECT_TIMEOUT, String.valueOf(redirectTimeout)));
+    }
+
+    public static Integer extractPollingDelay(Map<String, String> options, int pollingDelay) {
+        return parseInt(options.getOrDefault(TIMER_POLLING_DELAY, String.valueOf(pollingDelay)));
     }
 
 }

@@ -9,6 +9,8 @@ import java.nio.ByteBuffer;
 import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Optional;
+import java.util.stream.Collectors;
 
 public class CommonConverter {
 
@@ -21,12 +23,11 @@ public class CommonConverter {
     }
 
     public static Map<String, String> mapArrayToMap(Map<String, String[]> map) {
-        if (map == null) {
-            return new HashMap<>();
-        }
-        Map<String, String> newMap = new HashMap<>();
-        map.forEach((K, V) -> newMap.put(K.trim(), V[0]));
-        return newMap;
+        return Optional.ofNullable(map)
+                .orElseGet(HashMap::new)
+                .entrySet().stream()
+                .collect(Collectors.toMap(k -> k.getKey().trim(),
+                        v -> v.getValue()[0]));
     }
 
 }

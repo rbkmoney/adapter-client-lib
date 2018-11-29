@@ -58,7 +58,7 @@ public class ProxyProviderVerification {
                 && context.getPaymentInfo().getPayment().isMakeRecurrent());
     }
 
-    public static Boolean isRecurrent(PaymentContext context) {
+    public static boolean isRecurrent(PaymentContext context) {
         return context.getPaymentInfo().getPayment().getPaymentResource().isSetRecurrentPaymentResource();
     }
 

@@ -1,8 +1,5 @@
 package com.rbkmoney.java.damsel.constant;
 
-/**
- * This is the helper class for state
- */
 public class PaymentState {
     public static final String INIT = "init";
     public static final String PAY = "block";
