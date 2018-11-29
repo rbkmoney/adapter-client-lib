@@ -26,6 +26,10 @@ public class DomainPackageCreators {
         return new com.rbkmoney.damsel.proxy_provider.Cash(amount, currency);
     }
 
+    public static com.rbkmoney.damsel.proxy_provider.Cash createCash(Long amount, String name, Integer numericCode, String symbolicCode, Integer exponent) {
+        return new com.rbkmoney.damsel.proxy_provider.Cash(amount, createCurrency(name, numericCode, symbolicCode, exponent));
+    }
+
     public static com.rbkmoney.damsel.domain.Cash createCash(CurrencyRef currency, Long amount) {
         return new com.rbkmoney.damsel.domain.Cash(amount, currency);
     }
@@ -44,6 +48,10 @@ public class DomainPackageCreators {
 
     public static Currency createCurrency(String name, short numericCode, String symbolicCode, short exponent) {
         return new Currency(name, symbolicCode, numericCode, exponent);
+    }
+
+    public static Currency createCurrency(String name, Integer numericCode, String symbolicCode, Integer exponent) {
+        return createCurrency(name, numericCode.shortValue(), symbolicCode, exponent.shortValue());
     }
 
     public static CurrencyRef createCurrencyRef(String symbolicCode) {
@@ -106,5 +114,5 @@ public class DomainPackageCreators {
     public static TransactionInfo createTransactionInfo(String paymentId, Map<String, String> extra) {
         return createTransactionInfo(paymentId, extra, null);
     }
-    
+
 }

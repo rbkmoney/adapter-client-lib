@@ -6,7 +6,7 @@ public enum TargetInvoicePaymentStatus {
     CANCELLED,
     REFUNDED;
 
-    TargetInvoicePaymentStatus valueFromThrift(com.rbkmoney.damsel.domain.TargetInvoicePaymentStatus targetInvoicePaymentStatus) {
+    public TargetInvoicePaymentStatus valueFromThrift(com.rbkmoney.damsel.domain.TargetInvoicePaymentStatus targetInvoicePaymentStatus) {
         if (targetInvoicePaymentStatus.isSetProcessed()) {
             return PROCESSED;
         } else if (targetInvoicePaymentStatus.isSetCaptured()) {

@@ -6,6 +6,10 @@ import com.rbkmoney.damsel.domain.BankCard;
 
 public class CdsPackageCreators {
 
+    public static final String CARDHOLDER_NAME_NONAME = "NONAME";
+    public static final String CARDHOLDER_NAME_UNKNOWN = "UNKNOWN";
+
+
     public static ExpDate createExpDate(byte month, short year) {
         return new ExpDate(month, year);
     }
