@@ -5,6 +5,7 @@ import com.rbkmoney.damsel.domain.*;
 import com.rbkmoney.damsel.proxy_provider.*;
 import com.rbkmoney.damsel.proxy_provider.Invoice;
 import com.rbkmoney.damsel.proxy_provider.InvoicePayment;
+import com.rbkmoney.damsel.proxy_provider.InvoicePaymentRefund;
 import com.rbkmoney.damsel.proxy_provider.Shop;
 import com.rbkmoney.damsel.user_interaction.BrowserGetRequest;
 import com.rbkmoney.damsel.user_interaction.BrowserHTTPRequest;
@@ -128,7 +129,11 @@ public class ProxyProviderPackageCreators {
     }
 
     public static PaymentInfo createPaymentInfo(Invoice invoice, Shop shop, InvoicePayment invoicePayment) {
-        return new PaymentInfo(shop, invoice, invoicePayment);
+        return createPaymentInfo(invoice, shop, invoicePayment, null);
+    }
+
+    public static PaymentInfo createPaymentInfo(Invoice invoice, Shop shop, InvoicePayment invoicePayment, InvoicePaymentRefund invoicePaymentRefund) {
+        return new PaymentInfo(shop, invoice, invoicePayment).setRefund(invoicePaymentRefund);
     }
 
     public static PaymentContext createContext(PaymentInfo paymentInfo, Session session, Map<String, String> options) {
@@ -150,11 +155,19 @@ public class ProxyProviderPackageCreators {
     }
 
     public static InvoicePayment createInvoicePaymentWithTrX(String invoicePaymentId, String createdAt, PaymentResource paymentResource, com.rbkmoney.damsel.proxy_provider.Cash cost, TransactionInfo transactionInfo) {
-        return new InvoicePayment().setId(invoicePaymentId).setCreatedAt(createdAt).setPaymentResource(paymentResource).setCost(cost).setTrx(transactionInfo);
+        return createInvoicePaymentWithTrX(invoicePaymentId, createdAt, paymentResource, cost, transactionInfo, null);
+    }
+
+    public static InvoicePayment createInvoicePaymentWithTrX(String invoicePaymentId, String createdAt, PaymentResource paymentResource, com.rbkmoney.damsel.proxy_provider.Cash cost, TransactionInfo transactionInfo, ContactInfo contactInfo) {
+        return new InvoicePayment().setId(invoicePaymentId).setCreatedAt(createdAt).setPaymentResource(paymentResource).setCost(cost).setTrx(transactionInfo).setContactInfo(contactInfo);
     }
 
     public static Invoice createInvoice(String invoicePaymentId, String createdAt, com.rbkmoney.damsel.proxy_provider.Cash cost) {
         return new Invoice().setId(invoicePaymentId).setCreatedAt(createdAt).setCost(cost);
+    }
+
+    public static InvoicePaymentRefund createInvoicePaymentRefund(String refundId, TransactionInfo trx, com.rbkmoney.damsel.proxy_provider.Cash cash) {
+        return new InvoicePaymentRefund().setId(refundId).setTrx(trx).setCash(cash);
     }
 
     public static Session createSession(byte[] state) {
