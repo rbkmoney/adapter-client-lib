@@ -15,6 +15,7 @@ import com.rbkmoney.damsel.user_interaction.UserInteraction;
 import java.nio.ByteBuffer;
 import java.time.Instant;
 import java.util.Map;
+import java.util.Optional;
 
 import static com.rbkmoney.java.damsel.constant.Error.DEFAULT_ERROR_CODE;
 import static com.rbkmoney.java.damsel.utils.creators.BasePackageCreators.createTimerTimeout;
@@ -23,6 +24,8 @@ import static com.rbkmoney.java.damsel.utils.extractors.ProxyProviderPackageExtr
 import static com.rbkmoney.java.damsel.utils.extractors.ProxyProviderPackageExtractors.extractPaymentId;
 
 public class ProxyProviderPackageCreators {
+
+    public static final String DEFAULT_IP_ADDRESS = "0.0.0.0";
 
     public static final String INVOICE_PAYMENT_SEPARATOR_POINT = ".";
 
@@ -291,6 +294,60 @@ public class ProxyProviderPackageCreators {
     public static BankCard createBankCardWithToken(BankCard bankCard, BankCardTokenProvider bankCardTokenProvider) {
         bankCard.setTokenProvider(bankCardTokenProvider);
         return bankCard;
+    }
+
+    public static TransactionInfo extractTransactionInfo(PaymentContext context) {
+        return context.getPaymentInfo().getPayment().getTrx();
+    }
+
+    public static RecurrentTokenInfo extractTransactionInfo(RecurrentTokenContext context) {
+        return context.getTokenInfo();
+    }
+
+    public static byte[] extractSessionState(PaymentContext context) {
+        return context.getSession().getState();
+    }
+
+    public static byte[] extractSessionState(RecurrentTokenContext context) {
+        return context.getSession().getState();
+    }
+
+    private static String extractIpAddress(DisposablePaymentResource disposablePaymentResource) {
+        return Optional.ofNullable(disposablePaymentResource)
+                .map(DisposablePaymentResource::getClientInfo)
+                .map(ClientInfo::getIpAddress).orElse(DEFAULT_IP_ADDRESS);
+    }
+
+    public static String extractIpAddress(PaymentContext context) {
+        return extractIpAddress(extractDisposablePaymentResource(context));
+    }
+
+    public static String extractIpAddress(RecurrentTokenContext context) {
+        return extractIpAddress(extractDisposablePaymentResource(context));
+    }
+
+    public static DisposablePaymentResource extractDisposablePaymentResource(RecurrentTokenContext context) {
+        Optional<RecurrentPaymentTool> paymentTool = Optional.of(context).map(RecurrentTokenContext::getTokenInfo)
+                .map(RecurrentTokenInfo::getPaymentTool);
+
+        if (paymentTool.isPresent() && paymentTool.get().isSetPaymentResource()) {
+            paymentTool.get().getPaymentResource();
+        }
+
+        return null;
+    }
+
+    public static DisposablePaymentResource extractDisposablePaymentResource(PaymentContext context) {
+        Optional<PaymentResource> paymentResource = Optional.of(context)
+                .map(PaymentContext::getPaymentInfo)
+                .map(PaymentInfo::getPayment)
+                .map(InvoicePayment::getPaymentResource);
+
+        if (paymentResource.isPresent() && paymentResource.get().isSetDisposablePaymentResource()) {
+            return paymentResource.get().getDisposablePaymentResource();
+        }
+
+        return null;
     }
 
 }
