@@ -1,8 +1,7 @@
 package com.rbkmoney.java.damsel.utils.extractors;
 
-import com.rbkmoney.damsel.domain.ContactInfo;
-import com.rbkmoney.damsel.domain.DisposablePaymentResource;
-import com.rbkmoney.damsel.domain.TargetInvoicePaymentStatus;
+import com.rbkmoney.damsel.domain.*;
+import com.rbkmoney.damsel.proxy_provider.Cash;
 import com.rbkmoney.damsel.proxy_provider.*;
 
 import java.util.Map;
@@ -81,6 +80,30 @@ public class ProxyProviderPackageExtractors {
     public static Map<String, String> extractTrxExtra(PaymentContext context) {
         return context.getPaymentInfo().getPayment().getTrx().getExtra();
     }
+
+    public static TransactionInfo extractTransactionInfo(PaymentContext context) {
+        return context.getPaymentInfo().getPayment().getTrx();
+    }
+
+    public static BankCardPaymentSystem extractBankCardPaymentSystem(PaymentResource paymentResource) {
+        if (paymentResource.isSetDisposablePaymentResource()) {
+            return extractBankCardPaymentSystem(paymentResource.getDisposablePaymentResource());
+        }
+        return extractBankCardPaymentSystem(paymentResource.getRecurrentPaymentResource());
+    }
+
+    public static BankCardPaymentSystem extractBankCardPaymentSystem(PaymentContext context) {
+        return extractBankCardPaymentSystem(extractPaymentResource(context));
+    }
+
+    public static BankCardPaymentSystem extractBankCardPaymentSystem(RecurrentPaymentResource paymentResource) {
+        return paymentResource.getPaymentTool().getBankCard().getPaymentSystem();
+    }
+
+    public static BankCardPaymentSystem extractBankCardPaymentSystem(DisposablePaymentResource paymentResource) {
+        return paymentResource.getPaymentTool().getBankCard().getPaymentSystem();
+    }
+
 
     public static String extractTargetInvoicePaymentStatus(PaymentContext paymentContext) {
         return extractTargetInvoicePaymentStatus(paymentContext.getSession().getTarget());
