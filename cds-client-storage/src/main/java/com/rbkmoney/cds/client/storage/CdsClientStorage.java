@@ -13,6 +13,7 @@ import com.rbkmoney.damsel.withdrawals.provider_adapter.Withdrawal;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.thrift.TException;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Component;
 
 import java.util.Optional;
@@ -26,6 +27,7 @@ public class CdsClientStorage {
 
     private final StorageSrv.Iface storageSrv;
 
+    @Cacheable("cardData")
     public CardData getCardData(String token) {
         log.info("Get card data by token: {}", token);
         try {
