@@ -74,6 +74,7 @@ public class CdsClientStorage {
         return getSessionDataBySessionId(disposablePaymentResource.getPaymentSessionId());
     }
 
+    @Cacheable("sessionData")
     public SessionData getSessionDataBySessionId(String sessionId) {
         try {
             return storageSrv.getSessionData(sessionId);
