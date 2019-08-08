@@ -29,8 +29,11 @@
         <module>cds-client-storage</module>
         <module>cds-client-identity-document-storage</module>
         <module>hellgate-adapter-client</module>
+        <module>hellgate-client-party-management</module>
+        <module>dominant-client-repository</module>
         <module>damsel-utils</module>
     </modules>
+
 
     <build>
         <plugins>
@@ -61,7 +64,7 @@
             <dependency>
                 <groupId>org.projectlombok</groupId>
                 <artifactId>lombok</artifactId>
-                <version>1.16.22</version>
+                <version>1.18.8</version>
                 <scope>provided</scope>
             </dependency>
             <dependency>
@@ -73,7 +76,7 @@
             <dependency>
                 <groupId>com.rbkmoney</groupId>
                 <artifactId>damsel</artifactId>
-                <version>1.268-45c8524</version>
+                <version>1.324-5d47bde</version>
                 <scope>provided</scope>
             </dependency>
             <dependency>

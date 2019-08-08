@@ -1,0 +1,3 @@
+org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
+com.rbkmoney.dominant.repository.configuration.DominantRepositoryClientConfiguration,\
+com.rbkmoney.dominant.repository.DominantRepositoryClient
