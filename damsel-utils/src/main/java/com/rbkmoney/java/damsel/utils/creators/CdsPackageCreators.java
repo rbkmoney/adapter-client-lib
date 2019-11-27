@@ -6,6 +6,26 @@ import com.rbkmoney.damsel.domain.BankCard;
 
 public class CdsPackageCreators {
 
+    public static ExpDate createExpDate(byte month, short year) {
+        return new ExpDate(month, year);
+    }
+
+    public static ExpDate createExpDate(String month, String year) {
+        return createExpDate(Byte.parseByte(month), Short.parseShort(year));
+    }
+
+    public static CardData createCardData(String cardholderName, String cvv, String pan, ExpDate expDate) {
+        return new CardData(pan, expDate).setCardholderName(cardholderName).setCvv(cvv);
+    }
+
+    public static CardData createCardDataWithExpDate(String cardholderName, String cvv, String pan, byte month, short year) {
+        return createCardData(cardholderName, cvv, pan, createExpDate(month, year));
+    }
+
+    public static CardData createCardDataWithExpDate(String cardholderName, String cvv, String pan, String month, String year) {
+        return createCardData(cardholderName, cvv, pan, createExpDate(month, year));
+    }
+
     public static CardData createCardData(String pan, String cvv) {
         return new CardData().setPan(pan).setCvv(cvv);
     }
