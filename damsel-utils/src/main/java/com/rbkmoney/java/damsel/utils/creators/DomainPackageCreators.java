@@ -42,6 +42,10 @@ public class DomainPackageCreators {
         return new BankCard().setBin(bin).setMaskedPan(maskedPan).setToken(token).setPaymentSystem(bankCardPaymentSystem).setExpDate(bankCardExpDate).setCardholderName(cardholderName);
     }
 
+    public static BankCard createBankCard(String month, String year, String cardholderName) {
+        return new BankCard().setExpDate(createBankCardExpDate(month, year)).setCardholderName(cardholderName);
+    }
+
     public static BankCardExpDate createBankCardExpDate(byte month, short year) {
         return new BankCardExpDate(month, year);
     }
