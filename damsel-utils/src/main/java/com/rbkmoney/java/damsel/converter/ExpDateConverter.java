@@ -4,6 +4,11 @@ import com.rbkmoney.damsel.cds.ExpDate;
 
 import java.util.Calendar;
 
+/**
+ * @deprecated because removed
+ * use {@link BankCardExpDateConverter}.
+ */
+@Deprecated
 public class ExpDateConverter {
 
     /**

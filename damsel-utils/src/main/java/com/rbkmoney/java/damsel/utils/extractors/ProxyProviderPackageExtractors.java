@@ -46,6 +46,30 @@ public class ProxyProviderPackageExtractors {
         return context.getPaymentInfo().getPayment().getPaymentResource().getRecurrentPaymentResource().getRecToken();
     }
 
+    public static BankCard extractBankCard(RecurrentTokenContext context) {
+        return extractBankCard(context.getTokenInfo().getPaymentTool().getPaymentResource());
+    }
+
+    public static BankCard extractBankCard(PaymentContext context) {
+        return extractBankCard(context.getPaymentInfo().getPayment().getPaymentResource());
+    }
+
+    public static BankCard extractBankCard(PaymentResource paymentResource) {
+        if (paymentResource.isSetDisposablePaymentResource()) {
+            return extractBankCard(paymentResource.getDisposablePaymentResource());
+        }
+        return extractBankCard(paymentResource.getRecurrentPaymentResource());
+    }
+
+    public static BankCard extractBankCard(RecurrentPaymentResource paymentResource) {
+        return paymentResource.getPaymentTool().getBankCard();
+    }
+
+    public static BankCard extractBankCard(DisposablePaymentResource paymentResource) {
+        return paymentResource.getPaymentTool().getBankCard();
+    }
+
+
     public static String extractBankCardToken(PaymentResource paymentResource) {
         if (paymentResource.isSetDisposablePaymentResource()) {
             return extractBankCardToken(paymentResource.getDisposablePaymentResource());
