@@ -6,8 +6,8 @@ import com.rbkmoney.damsel.domain.BankCard;
 
 public class CdsPackageCreators {
 
-    public static CardData createCardData(String cvv) {
-        return new CardData().setCvv(cvv);
+    public static CardData createCardData(String pan, String cvv) {
+        return new CardData().setPan(pan).setCvv(cvv);
     }
 
     public static SessionData createSessionData(AuthData authData) {
