@@ -34,8 +34,20 @@ public class DomainPackageCreators {
         return new com.rbkmoney.damsel.domain.Cash(amount, currency);
     }
 
-    public static BankCard createBankCard(String bin, String maskedPan, String token, BankCardPaymentSystem bankCardPaymentSystem) {
-        return createBankCard(bin, maskedPan, token, bankCardPaymentSystem);
+    public static BankCard createBankCardWithExpDate(String bin, String maskedPan, String token, BankCardPaymentSystem bankCardPaymentSystem, String month, String year, String cardholderName) {
+        return createBankCard(bin, maskedPan, token, bankCardPaymentSystem, createBankCardExpDate(month, year), cardholderName);
+    }
+
+    public static BankCard createBankCard(String bin, String maskedPan, String token, BankCardPaymentSystem bankCardPaymentSystem, BankCardExpDate bankCardExpDate, String cardholderName) {
+        return new BankCard().setBin(bin).setMaskedPan(maskedPan).setToken(token).setPaymentSystem(bankCardPaymentSystem).setExpDate(bankCardExpDate).setCardholderName(cardholderName);
+    }
+
+    public static BankCardExpDate createBankCardExpDate(byte month, short year) {
+        return new BankCardExpDate(month, year);
+    }
+
+    public static BankCardExpDate createBankCardExpDate(String month, String year) {
+        return createBankCardExpDate(Byte.parseByte(month), Short.parseShort(year));
     }
 
     public static Shop createShop(CategoryRef categoryRef, ShopDetails shopDetails) {
