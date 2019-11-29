@@ -54,6 +54,10 @@ public class ProxyProviderPackageExtractors {
         return extractBankCard(context.getPaymentInfo().getPayment().getPaymentResource());
     }
 
+    public static BankCard extractBankCard(PaymentInfo paymentInfo) {
+        return extractBankCard(paymentInfo.getPayment().getPaymentResource());
+    }
+
     public static BankCard extractBankCard(PaymentResource paymentResource) {
         if (paymentResource.isSetDisposablePaymentResource()) {
             return extractBankCard(paymentResource.getDisposablePaymentResource());
