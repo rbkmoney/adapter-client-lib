@@ -2,11 +2,12 @@ package com.rbkmoney.java.damsel.utils.creators;
 
 import com.rbkmoney.damsel.base.Timer;
 import com.rbkmoney.damsel.domain.*;
-import com.rbkmoney.damsel.proxy_provider.*;
 import com.rbkmoney.damsel.proxy_provider.Invoice;
 import com.rbkmoney.damsel.proxy_provider.InvoicePayment;
 import com.rbkmoney.damsel.proxy_provider.InvoicePaymentRefund;
 import com.rbkmoney.damsel.proxy_provider.Shop;
+import com.rbkmoney.damsel.proxy_provider.*;
+import com.rbkmoney.damsel.timeout_behaviour.TimeoutBehaviour;
 import com.rbkmoney.damsel.user_interaction.BrowserGetRequest;
 import com.rbkmoney.damsel.user_interaction.BrowserHTTPRequest;
 import com.rbkmoney.damsel.user_interaction.BrowserPostRequest;
@@ -241,6 +242,28 @@ public class ProxyProviderPackageCreators {
 
     public static SuspendIntent createSuspendIntent(String tag, Integer timer, UserInteraction userInteraction) {
         return new SuspendIntent(tag, createTimerTimeout(timer)).setUserInteraction(userInteraction);
+    }
+
+    public static SuspendIntent createSuspendIntentTimeoutBehaviourWithFailure(String tag, Integer timer, UserInteraction userInteraction, Failure failure) {
+        return new SuspendIntent(tag, createTimerTimeout(timer))
+                .setUserInteraction(userInteraction)
+                .setTimeoutBehaviour(createTimeoutBehaviourWithFailure(failure));
+    }
+
+    public static SuspendIntent createSuspendIntent(String tag, Integer timer, UserInteraction userInteraction, TimeoutBehaviour timeoutBehaviour) {
+        return new SuspendIntent(tag, createTimerTimeout(timer)).setUserInteraction(userInteraction).setTimeoutBehaviour(timeoutBehaviour);
+    }
+
+    public static TimeoutBehaviour createTimeoutBehaviour(OperationFailure operationFailure) {
+        return TimeoutBehaviour.operation_failure(operationFailure);
+    }
+
+    public static TimeoutBehaviour createTimeoutBehaviourWithFailure(Failure failure) {
+        return TimeoutBehaviour.operation_failure(OperationFailure.failure(failure));
+    }
+
+    public static TimeoutBehaviour createTimeoutBehaviourWithOperationTimeout() {
+        return TimeoutBehaviour.operation_failure(OperationFailure.operation_timeout(new OperationTimeout()));
     }
 
     public static Intent createIntentWithSleepIntent(Integer timer) {
