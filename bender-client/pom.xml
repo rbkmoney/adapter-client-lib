@@ -44,6 +44,7 @@
             <groupId>com.rbkmoney</groupId>
             <artifactId>bender-proto</artifactId>
             <version>1.9-d765b9d</version>
+            <scope>provided</scope>
         </dependency>
         <!--Test libs-->
         <dependency>

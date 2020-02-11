@@ -23,7 +23,7 @@ public class BenderClient {
         try {
             return benderSrv.generateID(externalID, generationSchema, context);
         } catch (TException ex) {
-            throw new BenderException(String.format("Can't generateId with  externalID='%s', generationSchema='%s'", externalID, generationSchema), ex);
+            throw new BenderException(String.format("Can't generateId with externalID='%s', generationSchema='%s'", externalID, generationSchema), ex);
         }
     }
 
