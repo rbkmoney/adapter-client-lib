@@ -1,0 +1,3 @@
+org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
+com.rbkmoney.bender.client.configuration.BenderConfiguration,\
+com.rbkmoney.bender.client.BenderClient

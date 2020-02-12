@@ -77,7 +77,8 @@ public class ProxyProviderPackageCreators {
 
     // RecurrentTokenInfo
     public static RecurrentTokenInfo createRecurrentTokenInfo(RecurrentPaymentTool recurrentPaymentTool) {
-        return new RecurrentTokenInfo(recurrentPaymentTool);
+        return new RecurrentTokenInfo()
+                .setPaymentTool(recurrentPaymentTool);
     }
 
     // DisposablePaymentResource

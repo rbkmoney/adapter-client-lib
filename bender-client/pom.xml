@@ -3,7 +3,6 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
-
     <parent>
         <groupId>com.rbkmoney.proxy-libs</groupId>
         <artifactId>proxy-libs</artifactId>
@@ -11,11 +10,10 @@
         <relativePath>../pom.xml</relativePath>
     </parent>
 
-    <artifactId>cds-client-identity-document-storage</artifactId>
+    <artifactId>bender-client</artifactId>
     <packaging>jar</packaging>
 
     <dependencies>
-        <!--Thirdparty libs-->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter</artifactId>
@@ -29,6 +27,10 @@
             <artifactId>spring-boot-configuration-processor</artifactId>
             <optional>true</optional>
         </dependency>
+        <dependency>
+            <groupId>javax.validation</groupId>
+            <artifactId>validation-api</artifactId>
+        </dependency>
         <!--RBK libs-->
         <dependency>
             <groupId>com.rbkmoney.woody</groupId>
@@ -40,11 +42,9 @@
         </dependency>
         <dependency>
             <groupId>com.rbkmoney</groupId>
-            <artifactId>identdocstore-proto</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>javax.validation</groupId>
-            <artifactId>validation-api</artifactId>
+            <artifactId>bender-proto</artifactId>
+            <version>1.9-d765b9d</version>
+            <scope>provided</scope>
         </dependency>
         <!--Test libs-->
         <dependency>
