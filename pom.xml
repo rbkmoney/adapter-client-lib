@@ -33,7 +33,6 @@
         <module>bender-client</module>
     </modules>
 
-
     <build>
         <plugins>
             <plugin>
