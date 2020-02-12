@@ -3,11 +3,14 @@ package com.rbkmoney.java.damsel.utils.extractors;
 import com.rbkmoney.damsel.domain.*;
 import com.rbkmoney.damsel.proxy_provider.Cash;
 import com.rbkmoney.damsel.proxy_provider.*;
+import lombok.AccessLevel;
+import lombok.NoArgsConstructor;
 
 import java.util.Map;
 
 import static com.rbkmoney.java.damsel.constant.Error.UNKNOWN;
 
+@NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class ProxyProviderPackageExtractors {
 
     public static DisposablePaymentResource extractDisposablePaymentResource(RecurrentTokenContext context) {

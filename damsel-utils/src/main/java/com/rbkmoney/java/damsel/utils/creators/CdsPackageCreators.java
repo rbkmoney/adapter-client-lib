@@ -1,9 +1,11 @@
 package com.rbkmoney.java.damsel.utils.creators;
 
-
 import com.rbkmoney.damsel.cds.*;
 import com.rbkmoney.damsel.domain.BankCard;
+import lombok.AccessLevel;
+import lombok.NoArgsConstructor;
 
+@NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class CdsPackageCreators {
 
     public static ExpDate createExpDate(byte month, short year) {

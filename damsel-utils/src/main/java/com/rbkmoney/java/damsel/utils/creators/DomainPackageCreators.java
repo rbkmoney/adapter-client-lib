@@ -1,9 +1,12 @@
 package com.rbkmoney.java.damsel.utils.creators;
 
 import com.rbkmoney.damsel.domain.*;
+import lombok.AccessLevel;
+import lombok.NoArgsConstructor;
 
 import java.util.Map;
 
+@NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class DomainPackageCreators {
 
     public static TargetInvoicePaymentStatus createTargetProcessed() {

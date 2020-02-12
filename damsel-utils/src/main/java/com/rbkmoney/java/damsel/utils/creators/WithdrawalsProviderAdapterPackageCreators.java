@@ -7,9 +7,12 @@ import com.rbkmoney.damsel.msgpack.Value;
 import com.rbkmoney.damsel.withdrawals.provider_adapter.FinishStatus;
 import com.rbkmoney.damsel.withdrawals.provider_adapter.Intent;
 import com.rbkmoney.damsel.withdrawals.provider_adapter.ProcessResult;
+import lombok.AccessLevel;
+import lombok.NoArgsConstructor;
 
 import static com.rbkmoney.java.damsel.utils.creators.BasePackageCreators.createTimerTimeout;
 
+@NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class WithdrawalsProviderAdapterPackageCreators {
 
     public static com.rbkmoney.damsel.withdrawals.provider_adapter.Intent createIntentWithSleepIntent(Integer timer) {

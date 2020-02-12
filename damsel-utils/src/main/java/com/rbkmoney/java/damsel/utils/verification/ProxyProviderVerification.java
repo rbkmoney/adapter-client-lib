@@ -6,7 +6,10 @@ import com.rbkmoney.woody.api.flow.error.WErrorType;
 import com.rbkmoney.woody.api.flow.error.WRuntimeException;
 import com.rbkmoney.woody.api.trace.context.TraceContext;
 import com.rbkmoney.woody.thrift.impl.http.error.THTransportErrorMapper;
+import lombok.AccessLevel;
+import lombok.NoArgsConstructor;
 
+@NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class ProxyProviderVerification {
 
     public static boolean isSuccess(PaymentProxyResult proxyResult) {

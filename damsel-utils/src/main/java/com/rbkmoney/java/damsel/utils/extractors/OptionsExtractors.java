@@ -1,9 +1,13 @@
 package com.rbkmoney.java.damsel.utils.extractors;
 
+import lombok.AccessLevel;
+import lombok.NoArgsConstructor;
+
 import java.util.Map;
 
 import static java.lang.Integer.parseInt;
 
+@NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class OptionsExtractors {
 
     public static final String TIMER_REDIRECT_TIMEOUT = "redirect_timeout";

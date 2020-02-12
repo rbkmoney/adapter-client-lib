@@ -11,6 +11,11 @@
 ### Описание:
 
 
+##### Bender
+
+1. [bender-client](bender-client/README.md)
+
+
 ##### CDS
 
 1. [cds-client-storage](cds-client-storage/README.md)

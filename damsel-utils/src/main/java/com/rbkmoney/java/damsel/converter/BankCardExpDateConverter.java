@@ -1,9 +1,12 @@
 package com.rbkmoney.java.damsel.converter;
 
 import com.rbkmoney.damsel.domain.BankCardExpDate;
+import lombok.AccessLevel;
+import lombok.NoArgsConstructor;
 
 import java.util.Calendar;
 
+@NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class BankCardExpDateConverter {
 
     /**

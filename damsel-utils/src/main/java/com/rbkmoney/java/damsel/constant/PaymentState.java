@@ -1,5 +1,9 @@
 package com.rbkmoney.java.damsel.constant;
 
+import lombok.AccessLevel;
+import lombok.NoArgsConstructor;
+
+@NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class PaymentState {
     public static final String INIT = "init";
     public static final String PAY = "block";

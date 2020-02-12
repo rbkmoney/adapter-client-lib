@@ -1,7 +1,11 @@
 package com.rbkmoney.java.damsel.constant;
 
+import lombok.AccessLevel;
+import lombok.NoArgsConstructor;
+
 import java.util.Map;
 
+@NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class MpiState {
 
     public static final String MPI_STATE = "mpi_state";

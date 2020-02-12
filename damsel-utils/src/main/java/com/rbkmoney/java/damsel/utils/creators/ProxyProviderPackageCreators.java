@@ -12,6 +12,8 @@ import com.rbkmoney.damsel.user_interaction.BrowserGetRequest;
 import com.rbkmoney.damsel.user_interaction.BrowserHTTPRequest;
 import com.rbkmoney.damsel.user_interaction.BrowserPostRequest;
 import com.rbkmoney.damsel.user_interaction.UserInteraction;
+import lombok.AccessLevel;
+import lombok.NoArgsConstructor;
 
 import java.nio.ByteBuffer;
 import java.time.Instant;
@@ -24,6 +26,7 @@ import static com.rbkmoney.java.damsel.utils.creators.DomainPackageCreators.crea
 import static com.rbkmoney.java.damsel.utils.extractors.ProxyProviderPackageExtractors.extractInvoiceId;
 import static com.rbkmoney.java.damsel.utils.extractors.ProxyProviderPackageExtractors.extractPaymentId;
 
+@NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class ProxyProviderPackageCreators {
 
     public static final String DEFAULT_IP_ADDRESS = "0.0.0.0";
@@ -117,12 +120,12 @@ public class ProxyProviderPackageCreators {
     }
 
     // ProxyResult
-    public static PaymentProxyResult createPaymentProxyResult(Intent intent, byte[] next_state, TransactionInfo trx) {
-        return new PaymentProxyResult(intent).setNextState(next_state).setTrx(trx);
+    public static PaymentProxyResult createPaymentProxyResult(Intent intent, byte[] nextState, TransactionInfo trx) {
+        return new PaymentProxyResult(intent).setNextState(nextState).setTrx(trx);
     }
 
-    public static PaymentProxyResult createPaymentProxyResult(Intent intent, byte[] next_state) {
-        return createPaymentProxyResult(intent, next_state, null);
+    public static PaymentProxyResult createPaymentProxyResult(Intent intent, byte[] nextState) {
+        return createPaymentProxyResult(intent, nextState, null);
     }
 
     public static PaymentProxyResult createPaymentProxyResult(Intent intent) {

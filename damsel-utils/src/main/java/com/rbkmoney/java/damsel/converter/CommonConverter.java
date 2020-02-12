@@ -1,8 +1,9 @@
 package com.rbkmoney.java.damsel.converter;
 
-
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import lombok.AccessLevel;
+import lombok.NoArgsConstructor;
 
 import java.io.IOException;
 import java.nio.ByteBuffer;
@@ -12,6 +13,7 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+@NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class CommonConverter {
 
     public static Map byteBufferToMap(ByteBuffer byteBuffer) throws IOException {
