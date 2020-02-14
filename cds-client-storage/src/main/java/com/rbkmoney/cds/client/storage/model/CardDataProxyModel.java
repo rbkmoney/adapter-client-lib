@@ -7,10 +7,10 @@ import lombok.Data;
 @Builder
 public class CardDataProxyModel {
 
-    public String pan;
-    public String cardholderName;
+    private String pan;
+    private String cardholderName;
 
-    public byte expMonth;
-    public short expYear;
+    private byte expMonth;
+    private short expYear;
 
 }
