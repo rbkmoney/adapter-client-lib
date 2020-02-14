@@ -12,6 +12,8 @@ import com.rbkmoney.damsel.proxy_provider.InvoicePayment;
 import com.rbkmoney.damsel.proxy_provider.PaymentContext;
 import com.rbkmoney.damsel.proxy_provider.PaymentInfo;
 import com.rbkmoney.damsel.proxy_provider.PaymentResource;
+import com.rbkmoney.damsel.withdrawals.domain.Destination;
+import com.rbkmoney.damsel.withdrawals.provider_adapter.Withdrawal;
 import org.apache.thrift.TException;
 import org.junit.Before;
 import org.junit.Test;
@@ -60,15 +62,27 @@ public class CdsClientStorageTest {
         verify(storageSrv, times(1)).getCardData(eq(TOKEN));
     }
 
+    @Test
+    public void getCardDataWithdrawal() throws TException {
+        CardData cardData = new CardData();
+        cardData.setCardholderName("TEST TEST");
+        Mockito.when(storageSrv.getCardData(TOKEN)).thenReturn(cardData);
+
+        PaymentContext context = createPaymentContext();
+
+        Destination destination = new Destination();
+        destination.setBankCard(createBankCard());
+        Withdrawal withdrawal = new Withdrawal()
+                .setDestination(destination);
+
+        CardDataProxyModel cardDataProxyModel = client.getCardData(withdrawal);
+        assertEquals(cardData.getCardholderName(), cardDataProxyModel.getCardholderName());
+        verify(storageSrv, times(1)).getCardData(eq(TOKEN));
+    }
+
     private PaymentContext createPaymentContext() {
         PaymentTool paymentTool = new PaymentTool();
-        paymentTool.setBankCard(new BankCard()
-                .setToken(TOKEN)
-                .setExpDate(new BankCardExpDate()
-                        .setMonth((byte) 12)
-                        .setYear((short) 1234))
-                .setCardholderName(CARD_HOLDER_CARD)
-        );
+        paymentTool.setBankCard(createBankCard());
 
         PaymentResource paymentResource = new PaymentResource();
         paymentResource.setDisposablePaymentResource(new DisposablePaymentResource().setPaymentTool(paymentTool));
@@ -78,6 +92,15 @@ public class CdsClientStorageTest {
                                 .setPaymentResource(paymentResource)
                         )
                 );
+    }
+
+    private BankCard createBankCard() {
+        return new BankCard()
+                .setToken(TOKEN)
+                .setExpDate(new BankCardExpDate()
+                        .setMonth((byte) 12)
+                        .setYear((short) 1234))
+                .setCardholderName(CARD_HOLDER_CARD);
     }
 
     @Test

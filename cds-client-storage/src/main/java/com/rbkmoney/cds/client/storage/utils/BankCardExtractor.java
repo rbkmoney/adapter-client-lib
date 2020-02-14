@@ -11,7 +11,7 @@ public class BankCardExtractor {
 
     private static final String UNKNOWN = "UNKNOWN";
 
-    public static CardDataProxyModel extractCardHolderName(BankCard bankCard, CardData cardData) {
+    public static CardDataProxyModel initCardDataProxyModel(BankCard bankCard, CardData cardData) {
         String cardHolder = UNKNOWN;
         if (cardData.getCardholderName() != null) {
             cardHolder = cardData.getCardholderName();

@@ -17,7 +17,7 @@ import org.apache.thrift.TException;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Component;
 
-import static com.rbkmoney.cds.client.storage.utils.BankCardExtractor.extractCardHolderName;
+import static com.rbkmoney.cds.client.storage.utils.BankCardExtractor.initCardDataProxyModel;
 import static com.rbkmoney.java.damsel.utils.extractors.ProxyProviderPackageExtractors.*;
 
 @Component
@@ -40,7 +40,7 @@ public class CdsClientStorage {
     public CardDataProxyModel getCardData(PaymentContext context) {
         CardData cardData = getCardData(extractBankCardToken(extractPaymentResource(context)));
         BankCard bankCard = extractBankCard(context.getPaymentInfo());
-        return extractCardHolderName(bankCard, cardData);
+        return initCardDataProxyModel(bankCard, cardData);
     }
 
     public CardDataProxyModel getCardData(Withdrawal withdrawal) {
@@ -49,7 +49,7 @@ public class CdsClientStorage {
             throw new CdsStorageException("Token must be set for card data, withdrawalId " + withdrawal.getId());
         }
         BankCard bankCard = destination.getBankCard();
-        return extractCardHolderName(bankCard, getCardData(bankCard.getToken()));
+        return initCardDataProxyModel(bankCard, getCardData(bankCard.getToken()));
     }
 
     public SessionData getSessionData(PaymentContext context) {
@@ -66,7 +66,7 @@ public class CdsClientStorage {
             throw new CdsStorageException("Session Id must be set, recurrentId " + extractRecurrentId(context));
         }
         BankCard bankCard = extractBankCard(context);
-        return extractCardHolderName(bankCard, getCardData(extractBankCardToken(disposablePaymentResource)));
+        return initCardDataProxyModel(bankCard, getCardData(extractBankCardToken(disposablePaymentResource)));
     }
 
     public SessionData getSessionData(RecurrentTokenContext context) {
