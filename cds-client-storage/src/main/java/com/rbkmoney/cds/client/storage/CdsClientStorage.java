@@ -1,6 +1,7 @@
 package com.rbkmoney.cds.client.storage;
 
 import com.rbkmoney.cds.client.storage.exception.CdsStorageException;
+import com.rbkmoney.cds.client.storage.model.CardDataProxyModel;
 import com.rbkmoney.damsel.cds.CardData;
 import com.rbkmoney.damsel.cds.SessionData;
 import com.rbkmoney.damsel.cds.StorageSrv;
@@ -16,8 +17,7 @@ import org.apache.thrift.TException;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Component;
 
-import java.util.Optional;
-
+import static com.rbkmoney.cds.client.storage.utils.BankCardExtractor.extractCardHolderName;
 import static com.rbkmoney.java.damsel.utils.extractors.ProxyProviderPackageExtractors.*;
 
 @Component
@@ -37,17 +37,19 @@ public class CdsClientStorage {
         }
     }
 
-    public CardData getCardData(PaymentContext context) {
-        return getCardData(extractBankCardToken(extractPaymentResource(context)));
+    public CardDataProxyModel getCardData(PaymentContext context) {
+        CardData cardData = getCardData(extractBankCardToken(extractPaymentResource(context)));
+        BankCard bankCard = extractBankCard(context.getPaymentInfo());
+        return extractCardHolderName(bankCard, cardData);
     }
 
-    public CardData getCardData(Withdrawal withdrawal) {
-        String token = Optional.ofNullable(withdrawal.getDestination())
-                .map(Destination::getBankCard)
-                .map(BankCard::getToken)
-                .orElseThrow(() -> new CdsStorageException("Token must be set for card data, withdrawalId " + withdrawal.getId()));
-
-        return getCardData(token);
+    public CardDataProxyModel getCardData(Withdrawal withdrawal) {
+        Destination destination = withdrawal.getDestination();
+        if (!destination.isSetBankCard()) {
+            throw new CdsStorageException("Token must be set for card data, withdrawalId " + withdrawal.getId());
+        }
+        BankCard bankCard = destination.getBankCard();
+        return extractCardHolderName(bankCard, getCardData(bankCard.getToken()));
     }
 
     public SessionData getSessionData(PaymentContext context) {
@@ -58,12 +60,13 @@ public class CdsClientStorage {
         return getSessionDataBySessionId(disposablePaymentResource.getPaymentSessionId());
     }
 
-    public CardData getCardData(RecurrentTokenContext context) {
+    public CardDataProxyModel getCardData(RecurrentTokenContext context) {
         DisposablePaymentResource disposablePaymentResource = extractDisposablePaymentResource(context);
         if (!disposablePaymentResource.isSetPaymentSessionId()) {
             throw new CdsStorageException("Session Id must be set, recurrentId " + extractRecurrentId(context));
         }
-        return getCardData(extractBankCardToken(disposablePaymentResource));
+        BankCard bankCard = extractBankCard(context);
+        return extractCardHolderName(bankCard, getCardData(extractBankCardToken(disposablePaymentResource)));
     }
 
     public SessionData getSessionData(RecurrentTokenContext context) {
