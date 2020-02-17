@@ -60,7 +60,7 @@ public class CdsClientStorage {
         if (!context.getOperation().isSetProcess()
                 && !operation.getProcess().getSender().isSetDisposable()
                 && !operation.getProcess().getSender().getDisposable().getPaymentTool().isSetBankCard()) {
-            throw new CdsStorageException("Exception when convert ContextToP2PRequestConverter!");
+            throw new CdsStorageException("Exception when getCardData CdsClientStorage!");
         }
         PaymentResource sender = operation.getProcess().getSender();
         BankCard bankCard = sender.getDisposable().getPaymentTool().getBankCard();
