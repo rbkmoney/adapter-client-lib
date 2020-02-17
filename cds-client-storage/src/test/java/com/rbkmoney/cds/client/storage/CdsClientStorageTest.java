@@ -2,6 +2,7 @@ package com.rbkmoney.cds.client.storage;
 
 import com.rbkmoney.cds.client.storage.model.CardDataProxyModel;
 import com.rbkmoney.damsel.cds.CardData;
+import com.rbkmoney.damsel.cds.ExpDate;
 import com.rbkmoney.damsel.cds.SessionData;
 import com.rbkmoney.damsel.cds.StorageSrv;
 import com.rbkmoney.damsel.domain.BankCard;
@@ -33,6 +34,9 @@ public class CdsClientStorageTest {
 
     private static final String TOKEN = "some_token";
     public static final String CARD_HOLDER_CARD = "CARD_HOLDER_CARD";
+    public static final String PAN = "1234123412341234";
+    public static final byte MONTH = (byte) 4;
+    public static final short YEAR = (short) 20;
 
     private CdsClientStorage client;
 
@@ -66,6 +70,12 @@ public class CdsClientStorageTest {
     public void getCardDataWithdrawal() throws TException {
         CardData cardData = new CardData();
         cardData.setCardholderName("TEST TEST");
+        cardData.setPan(PAN);
+        cardData.setExpDate(new ExpDate()
+                .setMonth(MONTH)
+                .setYear(YEAR)
+        );
+
         Mockito.when(storageSrv.getCardData(TOKEN)).thenReturn(cardData);
 
         PaymentContext context = createPaymentContext();
@@ -77,6 +87,10 @@ public class CdsClientStorageTest {
 
         CardDataProxyModel cardDataProxyModel = client.getCardData(withdrawal);
         assertEquals(cardData.getCardholderName(), cardDataProxyModel.getCardholderName());
+        assertEquals(PAN, cardDataProxyModel.getPan());
+        assertEquals(MONTH, cardDataProxyModel.getExpMonth());
+        assertEquals(YEAR, cardDataProxyModel.getExpYear());
+
         verify(storageSrv, times(1)).getCardData(eq(TOKEN));
     }
 
