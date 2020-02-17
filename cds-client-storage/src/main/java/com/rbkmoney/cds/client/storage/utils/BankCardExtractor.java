@@ -21,6 +21,7 @@ public class BankCardExtractor {
 
         return CardDataProxyModel.builder()
                 .cardholderName(cardHolder)
+                .pan(cardData.getPan())
                 .expMonth(cardData.isSetExpDate() ? cardData.getExpDate().month : bankCard.getExpDate().getMonth())
                 .expYear(cardData.isSetExpDate() ? cardData.getExpDate().year : bankCard.getExpDate().getYear())
                 .build();
