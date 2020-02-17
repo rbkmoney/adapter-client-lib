@@ -7,8 +7,6 @@ import com.rbkmoney.damsel.cds.SessionData;
 import com.rbkmoney.damsel.cds.StorageSrv;
 import com.rbkmoney.damsel.domain.BankCard;
 import com.rbkmoney.damsel.domain.DisposablePaymentResource;
-import com.rbkmoney.damsel.p2p_adapter.Context;
-import com.rbkmoney.damsel.p2p_adapter.OperationInfo;
 import com.rbkmoney.damsel.p2p_adapter.PaymentResource;
 import com.rbkmoney.damsel.proxy_provider.PaymentContext;
 import com.rbkmoney.damsel.proxy_provider.RecurrentTokenContext;
@@ -55,15 +53,11 @@ public class CdsClientStorage {
         return initCardDataProxyModel(bankCard, getCardData(bankCard.getToken()));
     }
 
-    public CardDataProxyModel getCardData(Context context) {
-        OperationInfo operation = context.getOperation();
-        if (!context.getOperation().isSetProcess()
-                && !operation.getProcess().getSender().isSetDisposable()
-                && !operation.getProcess().getSender().getDisposable().getPaymentTool().isSetBankCard()) {
+    public CardDataProxyModel excludeCardDataProxyModel(PaymentResource paymentResource) {
+        if (!paymentResource.isSetDisposable() && !paymentResource.getDisposable().getPaymentTool().isSetBankCard()) {
             throw new CdsStorageException("Exception when getCardData CdsClientStorage!");
         }
-        PaymentResource sender = operation.getProcess().getSender();
-        BankCard bankCard = sender.getDisposable().getPaymentTool().getBankCard();
+        BankCard bankCard = paymentResource.getDisposable().getPaymentTool().getBankCard();
         return initCardDataProxyModel(bankCard, getCardData(bankCard.getToken()));
     }
 
