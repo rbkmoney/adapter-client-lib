@@ -53,7 +53,7 @@ public class CdsClientStorage {
         return initCardDataProxyModel(bankCard, getCardData(bankCard.getToken()));
     }
 
-    public CardDataProxyModel getCardDataProxyModel(PaymentResource paymentResource) {
+    public CardDataProxyModel getCardData(PaymentResource paymentResource) {
         if (!paymentResource.isSetDisposable() && !paymentResource.getDisposable().getPaymentTool().isSetBankCard()) {
             throw new CdsStorageException("Exception when getCardData CdsClientStorage!");
         }
