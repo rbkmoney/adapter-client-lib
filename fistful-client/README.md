@@ -33,7 +33,7 @@ Fistful Client
 ```
 fistful:
   client:
-    url: http://127.0.0.1:8022/v1/bender
+    url: http://127.0.0.1:8022/v1/ff_p2p_adapter_host
     networkTimeout: 5000
 ```
 
