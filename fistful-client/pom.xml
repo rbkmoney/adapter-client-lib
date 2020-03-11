@@ -10,7 +10,7 @@
         <relativePath>../pom.xml</relativePath>
     </parent>
 
-    <artifactId>bender-client</artifactId>
+    <artifactId>fistful-client</artifactId>
     <packaging>jar</packaging>
 
     <dependencies>
@@ -39,12 +39,6 @@
         <dependency>
             <groupId>com.rbkmoney</groupId>
             <artifactId>damsel</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>com.rbkmoney</groupId>
-            <artifactId>bender-proto</artifactId>
-            <version>1.9-d765b9d</version>
-            <scope>provided</scope>
         </dependency>
         <!--Test libs-->
         <dependency>

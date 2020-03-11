@@ -8,7 +8,7 @@ CDS Client Storage
 
 ```
 <dependency>
-    <groupId>com.rbkmoney.proxy-libs</groupId>
+    <groupId>com.rbkmoney.adapter-client-lib</groupId>
     <artifactId>cds-client-storage</artifactId>
     <version>${cds-client-storage.version}</version>
 </dependency>

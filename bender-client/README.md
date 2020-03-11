@@ -8,7 +8,7 @@ Bender Client
 
 ```
 <dependency>
-    <groupId>com.rbkmoney.proxy-libs</groupId>
+    <groupId>com.rbkmoney.adapter-client-lib</groupId>
     <artifactId>bender-client</artifactId>
     <version>${bender-client.version}</version>
 </dependency>

@@ -5,9 +5,9 @@
     <modelVersion>4.0.0</modelVersion>
 
     <parent>
-        <groupId>com.rbkmoney.proxy-libs</groupId>
-        <artifactId>proxy-libs</artifactId>
-        <version>2.1.18</version>
+        <groupId>com.rbkmoney.adapter-client-lib</groupId>
+        <artifactId>adapter-client-lib</artifactId>
+        <version>2.1.19</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
 

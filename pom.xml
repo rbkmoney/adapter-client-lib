@@ -11,9 +11,9 @@
         <relativePath/>
     </parent>
 
-    <groupId>com.rbkmoney.proxy-libs</groupId>
-    <artifactId>proxy-libs</artifactId>
-    <version>2.1.18</version>
+    <groupId>com.rbkmoney.adapter-client-lib</groupId>
+    <artifactId>adapter-client-lib</artifactId>
+    <version>2.1.19</version>
     <packaging>pom</packaging>
 
     <properties>
@@ -26,15 +26,15 @@
         <damsel.version>1.385-6886456</damsel.version>
     </properties>
 
-    <name>proxy-libs</name>
+    <name>adapter-client-lib</name>
     <description>Supporting libraries for proxy</description>
 
     <modules>
         <module>cds-client-storage</module>
         <module>cds-client-identity-document-storage</module>
         <module>hellgate-adapter-client</module>
-        <module>damsel-utils</module>
         <module>bender-client</module>
+        <module>fistful-client</module>
     </modules>
 
     <build>
@@ -134,6 +134,5 @@
             </dependency>
         </dependencies>
     </dependencyManagement>
-
 
 </project>

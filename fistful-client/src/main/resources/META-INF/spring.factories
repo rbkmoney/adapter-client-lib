@@ -1,0 +1,3 @@
+org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
+com.rbkmoney.fistful.client.configuration.FistfulConfiguration,\
+com.rbkmoney.fistful.client.FistfulClient

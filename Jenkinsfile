@@ -1,5 +1,5 @@
 #!groovy
-build('proxy_libs', 'docker-host') {
+build('adapter-client-lib', 'docker-host') {
     checkoutRepo()
     loadBuildUtils()
 

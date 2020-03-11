@@ -1,6 +1,6 @@
-Hellgate Client
+Fistful Client
 
-Обёртка над Hellgate для использования в адаптерах для провайдеров
+Библиотека взаимодействия клиента с сервисом Fistful
 
 ### Настройки
 
@@ -9,8 +9,8 @@ Hellgate Client
 ```
 <dependency>
     <groupId>com.rbkmoney.adapter-client-lib</groupId>
-    <artifactId>hellgate-adapter-client</artifactId>
-    <version>${hellgate-adapter-client.version}</version>
+    <artifactId>fistfull-client</artifactId>
+    <version>${fistfull-client.version}</version>
 </dependency>
 ```
 
@@ -31,15 +31,13 @@ Hellgate Client
 и в `application.yml`
 
 ```
-hellgate:
-    client:
-        adapter:
-            url: http://127.0.0.1:8022/v1/proxyhost/provider
-            networkTimeout: 30000
+fistful:
+  client:
+    url: http://127.0.0.1:8022/v1/bender
+    networkTimeout: 5000
 ```
 
 При подключенной зависимости без указания настроек в `application.yml` и запуске приложения - оно выдаст ошибку, что не был указан URL и как это исправить
-
 
 ### Использование
 
@@ -47,5 +45,7 @@ hellgate:
 
 ```
 @Autowired
-HellgateAdapterClient client;
+FistfulClient client;
+
+ProcessCallbackResult result = client.processCallback(callback);
 ```
