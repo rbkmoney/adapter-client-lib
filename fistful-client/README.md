@@ -9,8 +9,8 @@ Fistful Client
 ```
 <dependency>
     <groupId>com.rbkmoney.adapter-client-lib</groupId>
-    <artifactId>fistfull-client</artifactId>
-    <version>${fistfull-client.version}</version>
+    <artifactId>fistful-client</artifactId>
+    <version>${fistful-client.version}</version>
 </dependency>
 ```
 
