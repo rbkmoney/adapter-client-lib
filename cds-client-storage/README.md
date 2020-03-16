@@ -26,6 +26,11 @@ CDS Client Storage
     <artifactId>damsel</artifactId>
     <version>${damsel.version}</version>
 </dependency>
+<dependency>
+    <groupId>com.rbkmoney</groupId>
+    <artifactId>damsel</artifactId>
+    <version>${damsel.version}</version>
+</dependency>
 ```
 
 и в `application.yml`
