@@ -2,9 +2,9 @@ package com.rbkmoney.cds.client.storage;
 
 import com.rbkmoney.cds.client.storage.exception.CdsStorageException;
 import com.rbkmoney.cds.client.storage.model.CardDataProxyModel;
-import com.rbkmoney.damsel.cds.CardData;
-import com.rbkmoney.damsel.cds.SessionData;
-import com.rbkmoney.damsel.cds.StorageSrv;
+import com.rbkmoney.cds.storage.CardData;
+import com.rbkmoney.cds.storage.SessionData;
+import com.rbkmoney.cds.storage.StorageSrv;
 import com.rbkmoney.damsel.domain.BankCard;
 import com.rbkmoney.damsel.domain.DisposablePaymentResource;
 import com.rbkmoney.damsel.p2p_adapter.PaymentResource;

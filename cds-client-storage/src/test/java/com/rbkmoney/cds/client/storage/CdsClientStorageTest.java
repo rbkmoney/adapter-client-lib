@@ -1,10 +1,9 @@
 package com.rbkmoney.cds.client.storage;
 
 import com.rbkmoney.cds.client.storage.model.CardDataProxyModel;
-import com.rbkmoney.damsel.cds.CardData;
-import com.rbkmoney.damsel.cds.ExpDate;
-import com.rbkmoney.damsel.cds.SessionData;
-import com.rbkmoney.damsel.cds.StorageSrv;
+import com.rbkmoney.cds.storage.CardData;
+import com.rbkmoney.cds.storage.SessionData;
+import com.rbkmoney.cds.storage.StorageSrv;
 import com.rbkmoney.damsel.domain.BankCard;
 import com.rbkmoney.damsel.domain.BankCardExpDate;
 import com.rbkmoney.damsel.domain.DisposablePaymentResource;
@@ -56,29 +55,20 @@ public class CdsClientStorageTest {
     @Test
     public void getCardData() throws TException {
         CardData cardData = new CardData();
-        cardData.setCardholderName("TEST TEST");
+        cardData.setPan("pan");
         Mockito.when(storageSrv.getCardData(TOKEN)).thenReturn(cardData);
 
         PaymentContext context = createPaymentContext();
-
         CardDataProxyModel cardDataProxyModel = client.getCardData(context);
-        assertEquals(cardData.getCardholderName(), cardDataProxyModel.getCardholderName());
+        assertEquals(cardData.getPan(), cardDataProxyModel.getPan());
         verify(storageSrv, times(1)).getCardData(eq(TOKEN));
     }
 
     @Test
     public void getCardDataWithdrawal() throws TException {
         CardData cardData = new CardData();
-        cardData.setCardholderName("TEST TEST");
         cardData.setPan(PAN);
-        cardData.setExpDate(new ExpDate()
-                .setMonth(MONTH)
-                .setYear(YEAR)
-        );
-
         Mockito.when(storageSrv.getCardData(TOKEN)).thenReturn(cardData);
-
-        PaymentContext context = createPaymentContext();
 
         Destination destination = new Destination();
         destination.setBankCard(createBankCard());
@@ -86,7 +76,6 @@ public class CdsClientStorageTest {
                 .setDestination(destination);
 
         CardDataProxyModel cardDataProxyModel = client.getCardData(withdrawal);
-        assertEquals(cardData.getCardholderName(), cardDataProxyModel.getCardholderName());
         assertEquals(PAN, cardDataProxyModel.getPan());
         assertEquals(MONTH, cardDataProxyModel.getExpMonth());
         assertEquals(YEAR, cardDataProxyModel.getExpYear());
@@ -112,8 +101,8 @@ public class CdsClientStorageTest {
         return new BankCard()
                 .setToken(TOKEN)
                 .setExpDate(new BankCardExpDate()
-                        .setMonth((byte) 12)
-                        .setYear((short) 1234))
+                        .setMonth(MONTH)
+                        .setYear(YEAR))
                 .setCardholderName(CARD_HOLDER_CARD);
     }
 

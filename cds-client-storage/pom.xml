@@ -7,12 +7,16 @@
     <parent>
         <groupId>com.rbkmoney.adapter-client-lib</groupId>
         <artifactId>adapter-client-lib</artifactId>
-        <version>2.1.19</version>
+        <version>2.1.20</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
 
     <artifactId>cds-client-storage</artifactId>
     <packaging>jar</packaging>
+
+    <properties>
+        <cds-proto.version>1.56-f6ac992</cds-proto.version>
+    </properties>
 
     <dependencies>
         <!--Thirdparty libs-->
@@ -34,6 +38,11 @@
             <artifactId>validation-api</artifactId>
         </dependency>
         <!--RBK libs-->
+        <dependency>
+            <groupId>com.rbkmoney</groupId>
+            <artifactId>cds-proto</artifactId>
+            <version>${cds-proto.version}</version>
+        </dependency>
         <dependency>
             <groupId>com.rbkmoney.woody</groupId>
             <artifactId>woody-thrift</artifactId>
