@@ -1,8 +1,8 @@
 package com.rbkmoney.cds.client.storage.utils;
 
-import com.rbkmoney.cds.client.storage.model.CardDataProxyModel;
 import com.rbkmoney.cds.storage.CardData;
 import com.rbkmoney.damsel.domain.BankCard;
+import com.rbkmoney.java.cds.utils.model.CardDataProxyModel;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 
