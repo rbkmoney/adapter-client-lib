@@ -13,15 +13,17 @@ public class BankCardExtractor {
 
     public static CardDataProxyModel initCardDataProxyModel(BankCard bankCard, CardData cardData) {
         String cardHolder = UNKNOWN;
-        if(bankCard.getCardholderName() != null) {
+        if (bankCard.isSetCardholderName()) {
             cardHolder = bankCard.getCardholderName();
+        } else if (cardData.isSetCardholderName()) {
+            cardHolder = cardData.getCardholderName();
         }
 
         return CardDataProxyModel.builder()
                 .cardholderName(cardHolder)
                 .pan(cardData.getPan())
-                .expMonth(bankCard.getExpDate().getMonth())
-                .expYear(bankCard.getExpDate().getYear())
+                .expMonth(bankCard.isSetExpDate() ? bankCard.getExpDate().getMonth() : cardData.getExpDate().getMonth())
+                .expYear(bankCard.isSetExpDate() ? bankCard.getExpDate().getYear() : cardData.getExpDate().getYear())
                 .build();
     }
 
