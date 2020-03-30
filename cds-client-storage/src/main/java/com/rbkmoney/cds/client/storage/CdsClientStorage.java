@@ -13,6 +13,7 @@ import com.rbkmoney.damsel.proxy_provider.RecurrentTokenContext;
 import com.rbkmoney.damsel.withdrawals.domain.Destination;
 import com.rbkmoney.damsel.withdrawals.provider_adapter.Withdrawal;
 import com.rbkmoney.java.cds.utils.model.CardDataProxyModel;
+import com.rbkmoney.java.damsel.utils.extractors.ProxyProviderPackageExtractors;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.thrift.TException;
@@ -36,6 +37,16 @@ public class CdsClientStorage {
         } catch (TException ex) {
             throw new CdsStorageException(String.format("Can't get card data with token: %s", token), ex);
         }
+    }
+
+    public CardDataProxyModel getCardData(PaymentContext context, com.rbkmoney.damsel.proxy_provider.PaymentResource paymentResource) {
+        if (paymentResource.isSetDisposablePaymentResource()) {
+            String cardToken = ProxyProviderPackageExtractors.extractBankCardToken(paymentResource);
+            CardData cardData = getCardData(cardToken);
+            BankCard bankCard = ProxyProviderPackageExtractors.extractBankCard(context);
+            return BankCardExtractor.initCardDataProxyModel(bankCard, cardData);
+        }
+        return getCardData(context);
     }
 
     public CardDataProxyModel getCardData(PaymentContext context) {
