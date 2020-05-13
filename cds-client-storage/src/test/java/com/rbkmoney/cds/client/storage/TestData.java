@@ -24,7 +24,7 @@ public class TestData {
 
     public static PaymentContext createPaymentContext() {
         PaymentTool paymentTool = new PaymentTool();
-        paymentTool.setBankCard(createBankCard());
+        paymentTool.setBankCard(createBankCardWithExpDate());
 
         PaymentResource paymentResource = new PaymentResource();
         paymentResource.setDisposablePaymentResource(new DisposablePaymentResource().setPaymentTool(paymentTool));
