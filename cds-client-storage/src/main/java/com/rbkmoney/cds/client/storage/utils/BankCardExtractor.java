@@ -1,5 +1,6 @@
 package com.rbkmoney.cds.client.storage.utils;
 
+import com.rbkmoney.cds.client.storage.exception.CdsStorageExpDateException;
 import com.rbkmoney.cds.storage.CardData;
 import com.rbkmoney.damsel.domain.BankCard;
 import com.rbkmoney.java.cds.utils.model.CardDataProxyModel;
@@ -17,6 +18,10 @@ public class BankCardExtractor {
             cardHolder = bankCard.getCardholderName();
         } else if (cardData.isSetCardholderName()) {
             cardHolder = cardData.getCardholderName();
+        }
+
+        if (!bankCard.isSetExpDate() && !cardData.isSetExpDate()) {
+            throw new CdsStorageExpDateException("Expiration date not found");
         }
 
         return CardDataProxyModel.builder()
