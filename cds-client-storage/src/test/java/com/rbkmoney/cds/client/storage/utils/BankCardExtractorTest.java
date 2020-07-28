@@ -4,10 +4,12 @@ import com.rbkmoney.cds.client.storage.TestData;
 import com.rbkmoney.cds.client.storage.exception.CdsStorageExpDateException;
 import com.rbkmoney.cds.storage.CardData;
 import com.rbkmoney.damsel.domain.BankCard;
+import com.rbkmoney.damsel.domain.BankCardExpDate;
 import com.rbkmoney.java.cds.utils.model.CardDataProxyModel;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 
 public class BankCardExtractorTest {
 
@@ -43,6 +45,12 @@ public class BankCardExtractorTest {
 
         assertEquals(TestData.YEAR, cardDataProxyModel.getExpYear());
         assertEquals(TestData.MONTH, cardDataProxyModel.getExpMonth());
+    }
+
+    @Test
+    public void testFakeGenerator(){
+        CardDataProxyModel fakeModel = BankCardExtractor.initCardDataProxyModel(new BankCard().setExpDate(new BankCardExpDate()), new CardData());
+        assertNotNull(fakeModel.getCardholderName());
     }
 
 }
