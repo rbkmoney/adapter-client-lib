@@ -2,25 +2,17 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0"
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <parent>
+        <artifactId>adapter-client-lib</artifactId>
+        <groupId>com.rbkmoney.adapter-client-lib</groupId>
+        <version>2.1.26</version>
+    </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <parent>
-        <groupId>com.rbkmoney.adapter-client-lib</groupId>
-        <artifactId>adapter-client-lib</artifactId>
-        <version>2.1.26</version>
-        <relativePath>../pom.xml</relativePath>
-    </parent>
-
-    <artifactId>cds-client-storage</artifactId>
+    <artifactId>fistful-client-withdrawal</artifactId>
     <packaging>jar</packaging>
 
-    <properties>
-        <cds-proto.version>1.57-b58a3fd</cds-proto.version>
-        <adapter-thrift-lib.version>1.0.3</adapter-thrift-lib.version>
-    </properties>
-
     <dependencies>
-        <!--Thirdparty libs-->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter</artifactId>
@@ -38,27 +30,7 @@
             <groupId>javax.validation</groupId>
             <artifactId>validation-api</artifactId>
         </dependency>
-        <dependency>
-            <groupId>com.github.javafaker</groupId>
-            <artifactId>javafaker</artifactId>
-            <version>1.0.2</version>
-        </dependency>
         <!--RBK libs-->
-        <dependency>
-            <groupId>com.rbkmoney</groupId>
-            <artifactId>cds-proto</artifactId>
-            <version>${cds-proto.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>com.rbkmoney.adapter-thrift-lib</groupId>
-            <artifactId>cds-utils</artifactId>
-            <version>${adapter-thrift-lib.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>com.rbkmoney.adapter-thrift-lib</groupId>
-            <artifactId>damsel-utils</artifactId>
-            <version>${adapter-thrift-lib.version}</version>
-        </dependency>
         <dependency>
             <groupId>com.rbkmoney.woody</groupId>
             <artifactId>woody-thrift</artifactId>

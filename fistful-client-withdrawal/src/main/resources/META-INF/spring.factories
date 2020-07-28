@@ -1,0 +1,3 @@
+org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
+com.rbkmoney.fistful.client.withdrawal.configuration.FistfulClientWithdrawalConfiguration,\
+com.rbkmoney.fistful.client.withdrawal.FistfulClientWithdrawal
