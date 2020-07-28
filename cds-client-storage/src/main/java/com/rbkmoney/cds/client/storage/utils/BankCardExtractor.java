@@ -38,7 +38,4 @@ public class BankCardExtractor {
                 .expYear(bankCard.isSetExpDate() ? bankCard.getExpDate().getYear() : cardData.getExpDate().getYear())
                 .build();
     }
-
-
-
 }
