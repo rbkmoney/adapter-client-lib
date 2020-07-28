@@ -8,8 +8,7 @@ import com.rbkmoney.damsel.domain.BankCardExpDate;
 import com.rbkmoney.java.cds.utils.model.CardDataProxyModel;
 import org.junit.Test;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.*;
 
 public class BankCardExtractorTest {
 
@@ -49,8 +48,8 @@ public class BankCardExtractorTest {
 
     @Test
     public void testFakeGenerator(){
-        CardDataProxyModel fakeModel = BankCardExtractor.initCardDataProxyModel(new BankCard().setExpDate(new BankCardExpDate()), new CardData());
-        assertNotNull(fakeModel.getCardholderName());
+        CardDataProxyModel fakeModel1 = BankCardExtractor.initCardDataProxyModel(new BankCard().setExpDate(new BankCardExpDate()), new CardData());
+        CardDataProxyModel fakeModel2 = BankCardExtractor.initCardDataProxyModel(new BankCard().setExpDate(new BankCardExpDate()), new CardData());
+        assertNotEquals(fakeModel1, fakeModel2);
     }
-
 }
