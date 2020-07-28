@@ -8,6 +8,7 @@ import com.rbkmoney.damsel.domain.BankCard;
 import com.rbkmoney.java.cds.utils.model.CardDataProxyModel;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
+import org.apache.commons.lang3.StringUtils;
 
 import java.util.Locale;
 
@@ -16,6 +17,7 @@ public class BankCardExtractor {
 
     private static final Name FAKER_NAME = new Faker(Locale.ENGLISH).name();
     private static final String DELIMITER = " ";
+    private static final String NAME_REGEXP = "[^a-zA-Z +]";
 
     public static CardDataProxyModel initCardDataProxyModel(BankCard bankCard, CardData cardData) {
         String cardHolder;
@@ -24,7 +26,9 @@ public class BankCardExtractor {
         } else if (cardData.isSetCardholderName()) {
             cardHolder = cardData.getCardholderName();
         } else {
-            cardHolder = (FAKER_NAME.firstName() + DELIMITER + FAKER_NAME.lastName()).toUpperCase();
+            cardHolder = (FAKER_NAME.firstName() + DELIMITER + FAKER_NAME.lastName())
+                    .replaceAll(NAME_REGEXP, StringUtils.EMPTY)
+                    .toUpperCase();
         }
 
         if (!bankCard.isSetExpDate() && !cardData.isSetExpDate()) {

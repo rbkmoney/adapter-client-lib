@@ -50,6 +50,6 @@ public class BankCardExtractorTest {
     public void testFakeGenerator(){
         CardDataProxyModel fakeModel1 = BankCardExtractor.initCardDataProxyModel(new BankCard().setExpDate(new BankCardExpDate()), new CardData());
         CardDataProxyModel fakeModel2 = BankCardExtractor.initCardDataProxyModel(new BankCard().setExpDate(new BankCardExpDate()), new CardData());
-        assertNotEquals(fakeModel1, fakeModel2);
+        assertNotEquals(fakeModel1.getCardholderName(), fakeModel2.getCardholderName());
     }
 }
