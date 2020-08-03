@@ -6,17 +6,29 @@
     <parent>
         <groupId>com.rbkmoney.adapter-client-lib</groupId>
         <artifactId>adapter-client-lib</artifactId>
-        <version>2.1.26</version>
+        <version>2.1.27</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
 
     <artifactId>bender-client</artifactId>
     <packaging>jar</packaging>
 
+    <properties>
+        <bender-proto.version>1.9-d765b9d</bender-proto.version>
+    </properties>
+
     <dependencies>
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-configuration-processor</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-autoconfigure</artifactId>
         </dependency>
         <dependency>
             <groupId>org.projectlombok</groupId>
@@ -43,14 +55,8 @@
         <dependency>
             <groupId>com.rbkmoney</groupId>
             <artifactId>bender-proto</artifactId>
-            <version>1.9-d765b9d</version>
+            <version>${bender-proto.version}</version>
             <scope>provided</scope>
-        </dependency>
-        <!--Test libs-->
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-test</artifactId>
-            <scope>test</scope>
         </dependency>
     </dependencies>
 
