@@ -1,5 +1,8 @@
 # adapter-client-lib
 
+[![Build Status](http://ci.rbkmoney.com/buildStatus/icon?job=rbkmoney_private/adapter-client-lib/master)](http://ci.rbkmoney.com/job/rbkmoney_private/job/adapter-client-lib/job/master/)
+
+
 Вспомогательные библиотеки для адаптеров
 
 
