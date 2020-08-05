@@ -8,6 +8,6 @@ build('adapter-client-lib', 'docker-host') {
         javaLibPipeline = load("build_utils/jenkins_lib/pipeJavaLib.groovy")
     }
 
-    def buildImageTag = "bc95d0d6dc13c693acd2b274531a7d604b877bf3"
+    def buildImageTag = "b04c5291d101132e53e578d96e1628d2e6dab0c0"
     javaLibPipeline(buildImageTag)
 }
