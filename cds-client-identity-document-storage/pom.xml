@@ -15,7 +15,7 @@
     <packaging>jar</packaging>
 
     <properties>
-        <identdocstore-proto.version>1.6-ccd301e</identdocstore-proto.version>
+        <identdocstore-proto.version>1.10-89a4cda</identdocstore-proto.version>
     </properties>
 
     <dependencies>

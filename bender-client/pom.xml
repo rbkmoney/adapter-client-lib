@@ -14,7 +14,7 @@
     <packaging>jar</packaging>
 
     <properties>
-        <bender-proto.version>1.9-d765b9d</bender-proto.version>
+        <bender-proto.version>1.13-1418138</bender-proto.version>
     </properties>
 
     <dependencies>
