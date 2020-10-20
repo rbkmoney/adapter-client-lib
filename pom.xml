@@ -104,7 +104,6 @@
                 <configuration>
                     <source>${java.version}</source>
                     <target>${java.version}</target>
-                    <verbose>true</verbose>
                 </configuration>
             </plugin>
         </plugins>
