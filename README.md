@@ -32,7 +32,6 @@
 
 ##### Fistful
 
-1. [fistful-client](fistful-client/README.md)
 1. [fistful-client-withdrawal](fistful-client-withdrawal/README.md)
 
 
