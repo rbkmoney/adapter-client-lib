@@ -7,7 +7,6 @@ import com.rbkmoney.cds.storage.SessionData;
 import com.rbkmoney.cds.storage.StorageSrv;
 import com.rbkmoney.damsel.domain.BankCard;
 import com.rbkmoney.damsel.domain.DisposablePaymentResource;
-import com.rbkmoney.damsel.p2p_adapter.PaymentResource;
 import com.rbkmoney.damsel.proxy_provider.PaymentContext;
 import com.rbkmoney.damsel.proxy_provider.RecurrentTokenContext;
 import com.rbkmoney.damsel.withdrawals.domain.Destination;
@@ -61,14 +60,6 @@ public class CdsClientStorage {
             throw new CdsStorageException("Token must be set for card data, withdrawalId " + withdrawal.getId());
         }
         BankCard bankCard = destination.getBankCard();
-        return BankCardExtractor.initCardDataProxyModel(bankCard, getCardData(bankCard.getToken()));
-    }
-
-    public CardDataProxyModel getCardData(PaymentResource paymentResource) {
-        if (!paymentResource.isSetDisposable() && !paymentResource.getDisposable().getPaymentTool().isSetBankCard()) {
-            throw new CdsStorageException("Exception when getCardData CdsClientStorage!");
-        }
-        BankCard bankCard = paymentResource.getDisposable().getPaymentTool().getBankCard();
         return BankCardExtractor.initCardDataProxyModel(bankCard, getCardData(bankCard.getToken()));
     }
 

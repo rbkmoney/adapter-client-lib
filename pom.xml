@@ -13,7 +13,7 @@
 
     <groupId>com.rbkmoney.adapter-client-lib</groupId>
     <artifactId>adapter-client-lib</artifactId>
-    <version>2.1.28</version>
+    <version>3.0.0</version>
     <packaging>pom</packaging>
 
     <properties>
@@ -24,7 +24,7 @@
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <java.version>1.8</java.version>
         <spring-boot.version>2.3.1.RELEASE</spring-boot.version>
-        <damsel.version>1.439-b18f037</damsel.version>
+        <damsel.version>1.531-8818b8e</damsel.version>
         <lombok.version>1.18.8</lombok.version>
         <woody-thrift.version>[1.1.21,)</woody-thrift.version>
         <validation-api.version>2.0.1.Final</validation-api.version>
@@ -61,7 +61,6 @@
         <module>cds-client-identity-document-storage</module>
         <module>hellgate-adapter-client</module>
         <module>bender-client</module>
-        <module>fistful-client</module>
         <module>fistful-client-withdrawal</module>
     </modules>
 
